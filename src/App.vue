@@ -63,9 +63,20 @@ const transitionName = computed(() => 'fade')
 .layout-right {
   position: sticky;
   top: 76px;
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
+  align-self: start;
+  max-height: calc(100vh - 76px - 20px);
+  overflow-y: auto;
+  overflow-x: hidden;
+  scrollbar-width: thin;
+}
+.layout-left::-webkit-scrollbar,
+.layout-right::-webkit-scrollbar {
+  width: 4px;
+}
+.layout-left::-webkit-scrollbar-thumb,
+.layout-right::-webkit-scrollbar-thumb {
+  background: var(--color-border);
+  border-radius: 4px;
 }
 .layout-center {
   min-width: 0;
@@ -73,34 +84,38 @@ const transitionName = computed(() => 'fade')
   flex-direction: column;
   gap: 16px;
 }
+@media (max-width: 1280px) {
+  .layout {
+    grid-template-columns: 220px minmax(0, 1fr) 260px;
+  }
+}
 @media (max-width: 1024px) {
   .layout {
-    grid-template-columns: 220px minmax(0, 1fr);
+    grid-template-columns: minmax(0, 1fr);
+    gap: 16px;
+  }
+  .layout-left,
+  .layout-right {
+    position: static;
+    max-height: none;
+    overflow: visible;
+  }
+  .layout-left {
+    order: 1;
+  }
+  .layout-center {
+    order: 2;
   }
   .layout-right {
-    grid-column: 1 / -1;
-    position: static;
-    flex-direction: row;
-    flex-wrap: wrap;
+    order: 3;
   }
   .layout-right > * {
-    flex: 1 1 280px;
+    width: 100%;
   }
 }
 @media (max-width: 768px) {
   .app-main {
     padding: 12px;
-  }
-  .layout {
-    grid-template-columns: 1fr;
-  }
-  .layout-left,
-  .layout-right {
-    position: static;
-    flex-direction: column;
-  }
-  .layout-right > * {
-    flex: 1 1 100%;
   }
 }
 </style>
