@@ -2,7 +2,7 @@
 export const SITE = {
   name: '鷹の団',
   nickname: 'Gr1ff1th',
-  title: '计算机科学与技术本科生',
+  title: '个人开发者',
   email: 'weixianyun55@gmail.com',
   location: '济南',
   startDate: '2026-08-15',
@@ -31,12 +31,12 @@ export const SITE = {
 
 export const NOTICES = {
   light: {
-    jp: '光の鷹は翔ぶ。白銀の翼、蒼き眼。',
-    zh: '光之鹰展翅翱翔。白银之翼，蔚蓝之瞳。'
+    jp: '光の鷹は翔ぶ 白銀の翼、蒼き眼',
+    zh: '光之鹰展翅翱翔 白银之翼，蔚蓝之瞳'
   },
   dark: {
-    jp: '闇の翼は降りる。血と闇の彼方より。',
-    zh: '暗之翼降临。自血与暗之彼方。'
+    jp: '闇の翼は降り る血と闇の彼方より',
+    zh: '暗之翼降临 来自血与暗之彼方。'
   }
 }
 
@@ -73,9 +73,26 @@ export const TECH_STACK = [
 ]
 
 // 示例数据（可空 — 留接口便于以后接入）
-export const PROJECTS = []
+export const PROJECTS = [
+  // {
+  //   id: 1,
+  //   title: '示例项目',
+  //   desc: '项目描述',
+  //   cover: '',
+  //   tags: ['Vue', 'TS'],
+  //   url: '#'
+  // }
+]
 
-export const ARTICLES = []
+export const ARTICLES = [
+  // {
+  //   id: 1,
+  //   title: '示例日记',
+  //   date: '2026-08-15',
+  //   excerpt: '这是示例文章。',
+  //   tags: ['随笔']
+  // }
+]
 
 export const ALBUMS = []
 
