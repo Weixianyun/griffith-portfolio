@@ -64,19 +64,6 @@ const transitionName = computed(() => 'fade')
   position: sticky;
   top: 76px;
   align-self: start;
-  max-height: calc(100vh - 76px - 20px);
-  overflow-y: auto;
-  overflow-x: hidden;
-  scrollbar-width: thin;
-}
-.layout-left::-webkit-scrollbar,
-.layout-right::-webkit-scrollbar {
-  width: 4px;
-}
-.layout-left::-webkit-scrollbar-thumb,
-.layout-right::-webkit-scrollbar-thumb {
-  background: var(--color-border);
-  border-radius: 4px;
 }
 .layout-center {
   min-width: 0;
@@ -97,8 +84,6 @@ const transitionName = computed(() => 'fade')
   .layout-left,
   .layout-right {
     position: static;
-    max-height: none;
-    overflow: visible;
   }
   .layout-left {
     order: 1;
