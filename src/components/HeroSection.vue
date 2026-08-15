@@ -32,12 +32,12 @@ const isDark = computed(() => theme.value === 'dark')
           </svg>
           查看项目
         </router-link>
-        <router-link to="/diary" class="btn btn-outline">
+        <router-link to="/posts" class="btn btn-outline">
           <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <path d="M4 4h12a4 4 0 0 1 4 4v12H8a4 4 0 0 1-4-4V4z" />
             <path d="M8 8h8M8 12h8M8 16h5" />
           </svg>
-          阅读文章
+          阅读推文
         </router-link>
       </div>
     </div>
