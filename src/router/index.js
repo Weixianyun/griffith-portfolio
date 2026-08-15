@@ -14,10 +14,10 @@ const routes = [
     meta: { title: '项目展示' }
   },
   {
-    path: '/diary',
-    name: 'diary',
-    component: () => import('../views/DiaryView.vue'),
-    meta: { title: '日记' }
+    path: '/posts',
+    name: 'posts',
+    component: () => import('../views/PostsView.vue'),
+    meta: { title: '推文' }
   },
   {
     path: '/album',
