@@ -9,7 +9,7 @@ const list = computed(() => ARTICLES.slice(0, 5))
   <section class="articles">
     <h2 class="section-title">
       <span>最新文章</span>
-      <router-link to="/diary" class="more">
+      <router-link to="/posts" class="more">
         查看全部
         <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
           <polyline points="9 18 15 12 9 6" />
