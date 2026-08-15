@@ -27,7 +27,7 @@ const categories = [
       </div>
       <ul v-if="recentArticles.length" class="recent-list">
         <li v-for="a in recentArticles" :key="a.id">
-          <a :href="`#/diary`">{{ a.title }}</a>
+          <a :href="`#/posts`">{{ a.title }}</a>
         </li>
       </ul>
       <div v-else class="empty">暂无文章</div>
