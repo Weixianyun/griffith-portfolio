@@ -51,12 +51,12 @@ import ThemeToggle from './ThemeToggle.vue'
           </svg>
           <span class="nav-label">项目展示</span>
         </router-link>
-        <router-link to="/diary" class="nav-item" active-class="active">
+        <router-link to="/posts" class="nav-item" active-class="active">
           <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <path d="M4 4h12a4 4 0 0 1 4 4v12H8a4 4 0 0 1-4-4V4z" />
             <path d="M8 8h8M8 12h8M8 16h5" />
           </svg>
-          <span class="nav-label">日记</span>
+          <span class="nav-label">推文</span>
         </router-link>
         <router-link to="/album" class="nav-item" active-class="active">
           <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
