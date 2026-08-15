@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="鷹の団 · Gr1ff1th — 计算机科学与技术本科生的个人博客与作品集" />
+    <meta name="author" content="Gr1ff1th" />
+    <meta name="theme-color" content="#3b82f6" />
+    <title>鷹の団 · Gr1ff1th</title>
+    <script>
+      // 在首屏渲染前应用主题，避免闪烁
+      (function () {
+        try {
+          var t = localStorage.getItem('griffith-theme');
+          if (!t) {
+            t = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+          }
+          document.documentElement.setAttribute('data-theme', t);
+        } catch (e) {}
+      })();
+    </script>
+  </head>
+  <body>
+    <div id="app"></div>
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>
