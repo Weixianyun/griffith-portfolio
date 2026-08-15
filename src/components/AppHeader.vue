@@ -8,8 +8,27 @@ import ThemeToggle from './ThemeToggle.vue'
     <div class="header-inner">
       <router-link to="/" class="brand">
         <span class="brand-mark" aria-hidden="true">
-          <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M3 3l7 19 2-9 9-2z" />
+          <svg viewBox="0 0 32 32" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" class="brand-glyph">
+            <defs>
+              <linearGradient id="bm-grad" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0" stop-color="#ffffff" stop-opacity="0.95" />
+                <stop offset="1" stop-color="#ffffff" stop-opacity="0.7" />
+              </linearGradient>
+            </defs>
+            <!-- 中央矛杆 -->
+            <path d="M16 2 L16 30" stroke="url(#bm-grad)" stroke-width="1.4" />
+            <!-- 顶部矛尖（双刃） -->
+            <path d="M16 2 L13 6 L16 7 L19 6 Z" fill="currentColor" stroke="none" />
+            <!-- 上方交叉双刃（左上/右上） -->
+            <path d="M16 8 C 11 6, 6 9, 7 14 C 11 13, 14 11, 16 10 Z" fill="currentColor" stroke="currentColor" stroke-width="0.4" />
+            <path d="M16 8 C 21 6, 26 9, 25 14 C 21 13, 18 11, 16 10 Z" fill="currentColor" stroke="currentColor" stroke-width="0.4" />
+            <!-- 中央菱形宝石 -->
+            <path d="M16 13 L20 17 L16 21 L12 17 Z" fill="currentColor" stroke="url(#bm-grad)" stroke-width="0.6" />
+            <!-- 下方交叉双刃（左下/右下） -->
+            <path d="M16 19 C 11 20, 7 24, 9 28 C 12 26, 14 23, 16 22 Z" fill="currentColor" stroke="currentColor" stroke-width="0.4" />
+            <path d="M16 19 C 21 20, 25 24, 23 28 C 20 26, 18 23, 16 22 Z" fill="currentColor" stroke="currentColor" stroke-width="0.4" />
+            <!-- 底部血滴 -->
+            <circle cx="16" cy="30.5" r="0.6" fill="currentColor" stroke="none" />
           </svg>
         </span>
         <span class="brand-text">{{ SITE.name }}</span>
@@ -106,6 +125,13 @@ import ThemeToggle from './ThemeToggle.vue'
   background: var(--gradient-button);
   color: #fff;
   border-radius: 8px;
+}
+.brand-glyph {
+  transition: transform 0.3s ease, filter 0.3s ease;
+}
+.brand:hover .brand-glyph {
+  transform: rotate(-6deg) scale(1.08);
+  filter: drop-shadow(0 0 4px rgba(255, 255, 255, 0.6));
 }
 .nav {
   display: flex;
