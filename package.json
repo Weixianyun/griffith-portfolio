@@ -1,0 +1,20 @@
+{
+  "name": "griffith-portfolio",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "description": "鷹の団 · Gr1ff1th 个人博客 / Portfolio",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "vue": "^3.4.27",
+    "vue-router": "^4.3.2"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "^5.0.4",
+    "vite": "^5.2.11"
+  }
+}
