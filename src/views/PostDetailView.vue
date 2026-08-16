@@ -14,51 +14,204 @@ const article = computed(() => {
 const index = computed(() => ARTICLES.findIndex(a => a.id === Number(route.params.id)))
 const prev = computed(() => (index.value > 0 ? ARTICLES[index.value - 1] : null))
 const next = computed(() => (index.value >= 0 && index.value < ARTICLES.length - 1 ? ARTICLES[index.value + 1] : null))
+
+// 轻量 markdown 解析：支持 # ## 标题 / **bold** / 列表 / 引用 / 段落 / 表格
+function parseInline(text) {
+  // **bold**
+  const parts = []
+  let i = 0
+  let buf = ''
+  while (i < text.length) {
+    if (text[i] === '*' && text[i + 1] === '*') {
+      const end = text.indexOf('**', i + 2)
+      if (end > -1) {
+        if (buf) parts.push({ type: 'text', value: buf })
+        parts.push({ type: 'bold', value: text.slice(i + 2, end) })
+        buf = ''
+        i = end + 2
+        continue
+      }
+    }
+    buf += text[i]
+    i++
+  }
+  if (buf) parts.push({ type: 'text', value: buf })
+  return parts
+}
+
+const blocks = computed(() => {
+  if (!article.value?.content) return []
+  const lines = article.value.content.split('\n')
+  const result = []
+  let i = 0
+  while (i < lines.length) {
+    const line = lines[i]
+    const trimmed = line.trim()
+
+    if (!trimmed) { i++; continue }
+
+    // 表格：连续 | ... | 行
+    if (trimmed.startsWith('|') && trimmed.endsWith('|') && i + 1 < lines.length && /^\|[\s\-:|]+\|$/.test(lines[i + 1].trim())) {
+      const headers = trimmed.slice(1, -1).split('|').map(s => s.trim())
+      i += 2
+      const rows = []
+      while (i < lines.length && lines[i].trim().startsWith('|') && lines[i].trim().endsWith('|')) {
+        rows.push(lines[i].trim().slice(1, -1).split('|').map(s => s.trim()))
+        i++
+      }
+      result.push({ type: 'table', headers, rows })
+      continue
+    }
+
+    // 标题
+    if (trimmed.startsWith('### ')) {
+      result.push({ type: 'h3', text: trimmed.slice(4) })
+      i++; continue
+    }
+    if (trimmed.startsWith('## ')) {
+      result.push({ type: 'h2', text: trimmed.slice(3) })
+      i++; continue
+    }
+    if (trimmed.startsWith('# ')) {
+      result.push({ type: 'h1', text: trimmed.slice(2) })
+      i++; continue
+    }
+
+    // 引用
+    if (trimmed.startsWith('> ')) {
+      const quoteLines = []
+      while (i < lines.length && lines[i].trim().startsWith('> ')) {
+        quoteLines.push(lines[i].trim().slice(2))
+        i++
+      }
+      result.push({ type: 'quote', text: quoteLines.join(' ') })
+      continue
+    }
+
+    // 有序列表
+    if (/^\d+\.\s/.test(trimmed)) {
+      const items = []
+      while (i < lines.length && /^\s*\d+\.\s/.test(lines[i])) {
+        items.push(lines[i].trim().replace(/^\d+\.\s/, ''))
+        i++
+      }
+      result.push({ type: 'ol', items })
+      continue
+    }
+
+    // 无序列表
+    if (trimmed.startsWith('- ') || trimmed.startsWith('* ')) {
+      const items = []
+      while (i < lines.length && (lines[i].trim().startsWith('- ') || lines[i].trim().startsWith('* '))) {
+        items.push(lines[i].trim().replace(/^[-*]\s/, ''))
+        i++
+      }
+      result.push({ type: 'ul', items })
+      continue
+    }
+
+    // 普通段落（合并连续行）
+    const para = []
+    while (i < lines.length && lines[i].trim() && !lines[i].trim().startsWith('#') && !lines[i].trim().startsWith('- ') && !lines[i].trim().startsWith('* ') && !lines[i].trim().startsWith('> ') && !/^\d+\.\s/.test(lines[i].trim()) && !lines[i].trim().startsWith('|')) {
+      para.push(lines[i].trim())
+      i++
+    }
+    if (para.length) result.push({ type: 'p', text: para.join(' ') })
+  }
+  return result
+})
 </script>
 
 <template>
   <div class="page">
-    <button class="back" @click="router.push('/posts')">
-      <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-        <path d="M19 12H5M12 19l-7-7 7-7" />
-      </svg>
-      返回推文
-    </button>
+    <button class="back" @click="router.push('/posts')">← 返回推文</button>
 
     <article v-if="article" class="post glass">
       <header class="post-head">
-        <div class="avatar" aria-hidden="true">G</div>
-        <div class="who">
-          <div class="name">Gr1ff1th</div>
-          <div class="meta">
-            {{ article.date }}
-            <span v-if="article.tags?.length"> · {{ article.tags.join(' · ') }}</span>
-            <span v-if="article.words"> · 约 {{ article.words }} 字</span>
-          </div>
+        <h1 class="post-title">{{ article.title }}</h1>
+        <div class="post-meta">
+          <span>{{ article.date }}</span>
+          <span v-if="article.tags?.length">{{ article.tags.join(' · ') }}</span>
+          <span v-if="article.words">约 {{ article.words }} 字</span>
         </div>
+        <p class="post-excerpt">{{ article.excerpt }}</p>
       </header>
 
-      <h1 class="post-title">{{ article.title }}</h1>
-      <p class="post-excerpt">{{ article.excerpt }}</p>
-
-      <div v-if="article.content" class="post-content">
-        <pre>{{ article.content }}</pre>
+      <div v-if="article.content" class="post-body">
+        <template v-for="(b, idx) in blocks" :key="idx">
+          <h2 v-if="b.type === 'h1'" class="md-h1">
+            <span v-for="(p, pi) in parseInline(b.text)" :key="pi">
+              <strong v-if="p.type === 'bold'">{{ p.value }}</strong>
+              <span v-else>{{ p.value }}</span>
+            </span>
+          </h2>
+          <h2 v-else-if="b.type === 'h2'" class="md-h2">
+            <span v-for="(p, pi) in parseInline(b.text)" :key="pi">
+              <strong v-if="p.type === 'bold'">{{ p.value }}</strong>
+              <span v-else>{{ p.value }}</span>
+            </span>
+          </h2>
+          <h3 v-else-if="b.type === 'h3'" class="md-h3">
+            <span v-for="(p, pi) in parseInline(b.text)" :key="pi">
+              <strong v-if="p.type === 'bold'">{{ p.value }}</strong>
+              <span v-else>{{ p.value }}</span>
+            </span>
+          </h3>
+          <p v-else-if="b.type === 'p'" class="md-p">
+            <span v-for="(p, pi) in parseInline(b.text)" :key="pi">
+              <strong v-if="p.type === 'bold'">{{ p.value }}</strong>
+              <span v-else>{{ p.value }}</span>
+            </span>
+          </p>
+          <blockquote v-else-if="b.type === 'quote'" class="md-quote">
+            <span v-for="(p, pi) in parseInline(b.text)" :key="pi">
+              <strong v-if="p.type === 'bold'">{{ p.value }}</strong>
+              <span v-else>{{ p.value }}</span>
+            </span>
+          </blockquote>
+          <ol v-else-if="b.type === 'ol'" class="md-ol">
+            <li v-for="(item, ii) in b.items" :key="ii">
+              <span v-for="(p, pi) in parseInline(item)" :key="pi">
+                <strong v-if="p.type === 'bold'">{{ p.value }}</strong>
+                <span v-else>{{ p.value }}</span>
+              </span>
+            </li>
+          </ol>
+          <ul v-else-if="b.type === 'ul'" class="md-ul">
+            <li v-for="(item, ii) in b.items" :key="ii">
+              <span v-for="(p, pi) in parseInline(item)" :key="pi">
+                <strong v-if="p.type === 'bold'">{{ p.value }}</strong>
+                <span v-else>{{ p.value }}</span>
+              </span>
+            </li>
+          </ul>
+          <div v-else-if="b.type === 'table'" class="md-table">
+            <table>
+              <thead>
+                <tr><th v-for="(h, hi) in b.headers" :key="hi">{{ h }}</th></tr>
+              </thead>
+              <tbody>
+                <tr v-for="(row, ri) in b.rows" :key="ri">
+                  <td v-for="(cell, ci) in row" :key="ci">
+                    <span v-for="(p, pi) in parseInline(cell)" :key="pi">
+                      <strong v-if="p.type === 'bold'">{{ p.value }}</strong>
+                      <span v-else>{{ p.value }}</span>
+                    </span>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </template>
       </div>
+
       <div v-else class="post-empty">
-        <p>📄 详细推文源文件：<code>{{ article.sourceFile || 'src/data/posts/' + article.id + '.md' }}</code></p>
-        <p class="hint">提示：完整 Markdown 渲染器尚未接入，目前展示原始文本。可点击下方按钮直接跳转到 GitHub 查看完整版。</p>
-        <a v-if="article.repoUrl" :href="article.repoUrl" target="_blank" rel="noopener" class="repo-link">
-          🔗 查看 GitHub 项目 →
-        </a>
+        <p>详细推文源文件：<code>{{ article.sourceFile || 'src/data/posts/' + article.id + '.md' }}</code></p>
+        <a v-if="article.repoUrl" :href="article.repoUrl" target="_blank" rel="noopener" class="repo-link">查看 GitHub 项目</a>
       </div>
 
       <footer class="post-foot">
-        <a v-if="article.repoUrl" :href="article.repoUrl" target="_blank" rel="noopener" class="repo-btn">
-          <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22" />
-          </svg>
-          GitHub 项目
-        </a>
+        <a v-if="article.repoUrl" :href="article.repoUrl" target="_blank" rel="noopener" class="repo-btn">GitHub 项目</a>
 
         <div class="nav-pager">
           <router-link v-if="prev" :to="`/posts/${prev.id}`" class="pager">
@@ -74,8 +227,8 @@ const next = computed(() => (index.value >= 0 && index.value < ARTICLES.length -
     </article>
 
     <div v-else class="not-found glass">
-      <h2>😢 找不到这篇推文</h2>
-      <p>ID: <code>{{ route.params.id }}</code> 不存在。</p>
+      <h2>找不到这篇推文</h2>
+      <p>ID <code>{{ route.params.id }}</code> 不存在。</p>
       <button @click="router.push('/posts')">返回推文列表</button>
     </div>
   </div>
@@ -87,83 +240,178 @@ const next = computed(() => (index.value >= 0 && index.value < ARTICLES.length -
   min-height: 60vh;
 }
 .back {
-  display: inline-flex;
-  align-items: center;
-  gap: 4px;
-  padding: 6px 12px;
+  display: inline-block;
+  padding: 4px 0;
   margin-bottom: 16px;
-  background: var(--color-surface);
-  color: var(--color-text-soft);
-  border: 1px solid var(--color-border);
-  border-radius: 999px;
-  font-size: 12px;
+  background: none;
+  border: none;
+  color: var(--color-text-muted);
+  font-size: 13px;
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: color 0.2s ease;
 }
 .back:hover {
   color: var(--color-primary);
-  background: var(--color-primary-bg);
 }
 .post {
-  padding: 24px 28px;
+  padding: 32px 36px;
+  max-width: 720px;
+  margin: 0 auto;
 }
 .post-head {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  margin-bottom: 16px;
-}
-.avatar {
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  background: var(--gradient-button);
-  color: #fff;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-weight: 700;
-  font-size: 15px;
-  flex-shrink: 0;
-}
-.who .name {
-  font-size: 14px;
-  font-weight: 600;
-  color: var(--color-text);
-  line-height: 1.2;
-}
-.who .meta {
-  font-size: 11px;
-  color: var(--color-text-muted);
-  margin-top: 2px;
+  margin-bottom: 24px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid var(--color-border);
 }
 .post-title {
-  font-size: 20px;
+  font-size: 22px;
   font-weight: 700;
   color: var(--color-text);
   line-height: 1.4;
+  margin-bottom: 8px;
+  letter-spacing: 0.2px;
+}
+.post-meta {
+  display: flex;
+  gap: 12px;
+  font-size: 12px;
+  color: var(--color-text-muted);
   margin-bottom: 12px;
 }
 .post-excerpt {
   font-size: 14px;
   color: var(--color-text-soft);
-  line-height: 1.7;
-  padding: 12px 16px;
-  background: var(--color-surface-soft, var(--color-surface));
+  line-height: 1.75;
+  font-style: italic;
+}
+
+.post-body {
+  font-size: 14.5px;
+  color: var(--color-text);
+  line-height: 1.85;
+}
+
+.md-h1 {
+  font-size: 19px;
+  font-weight: 700;
+  color: var(--color-text);
+  margin: 32px 0 16px;
+  line-height: 1.4;
+}
+.md-h2 {
+  font-size: 17px;
+  font-weight: 600;
+  color: var(--color-text);
+  margin: 28px 0 12px;
+  line-height: 1.4;
+}
+.md-h3 {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--color-text);
+  margin: 20px 0 8px;
+  line-height: 1.4;
+}
+.md-p {
+  margin: 0 0 14px;
+  line-height: 1.85;
+}
+.md-p:last-child {
+  margin-bottom: 0;
+}
+.md-quote {
+  margin: 16px 0;
+  padding: 10px 16px;
   border-left: 3px solid var(--color-primary);
-  border-radius: 4px;
-  margin-bottom: 20px;
-  white-space: pre-wrap;
-}
-.post-content pre {
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif;
-  font-size: 13.5px;
+  background: var(--color-surface-soft, var(--color-surface));
   color: var(--color-text-soft);
-  line-height: 1.8;
-  white-space: pre-wrap;
-  word-wrap: break-word;
-  margin: 0;
+  font-size: 14px;
+  border-radius: 0 4px 4px 0;
 }
+.md-ul, .md-ol {
+  margin: 0 0 14px;
+  padding-left: 22px;
+}
+.md-ul li, .md-ol li {
+  margin-bottom: 6px;
+  line-height: 1.8;
+}
+.md-ul li::marker {
+  color: var(--color-text-muted);
+}
+.md-ol li::marker {
+  color: var(--color-text-muted);
+  font-weight: 500;
+}
+
+.md-table {
+  margin: 16px 0;
+  overflow-x: auto;
+}
+.md-table table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+}
+.md-table th, .md-table td {
+  padding: 8px 12px;
+  border: 1px solid var(--color-border);
+  text-align: left;
+  line-height: 1.5;
+}
+.md-table th {
+  background: var(--color-surface-soft, var(--color-surface));
+  font-weight: 600;
+  color: var(--color-text);
+}
+.md-table td {
+  color: var(--color-text-soft);
+}
+
+.post-foot {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 32px;
+  padding-top: 20px;
+  border-top: 1px solid var(--color-border);
+}
+.repo-btn {
+  display: inline-block;
+  padding: 6px 14px;
+  background: var(--color-surface);
+  color: var(--color-text);
+  border: 1px solid var(--color-border);
+  border-radius: 4px;
+  text-decoration: none;
+  font-size: 13px;
+  transition: all 0.2s ease;
+}
+.repo-btn:hover {
+  color: var(--color-primary);
+  border-color: var(--color-primary);
+}
+.nav-pager {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+.pager {
+  font-size: 13px;
+  color: var(--color-text-soft);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+.pager:hover {
+  color: var(--color-primary);
+}
+.pager.disabled {
+  color: var(--color-text-muted);
+  cursor: not-allowed;
+}
+
 .post-empty {
   text-align: center;
   padding: 40px 20px;
@@ -180,73 +428,15 @@ const next = computed(() => (index.value >= 0 && index.value < ARTICLES.length -
   font-size: 12px;
   color: var(--color-primary);
 }
-.post-empty .hint {
-  font-size: 12px;
-  color: var(--color-text-muted);
-  margin-top: 8px;
-}
 .repo-link {
   display: inline-block;
   margin-top: 16px;
   padding: 8px 18px;
-  background: var(--gradient-button);
+  background: var(--color-primary);
   color: #fff;
-  border-radius: 999px;
+  border-radius: 4px;
   text-decoration: none;
   font-size: 13px;
-  font-weight: 500;
-  transition: all 0.2s ease;
-}
-.repo-link:hover {
-  transform: translateY(-1px);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-}
-.post-foot {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 12px;
-  align-items: center;
-  justify-content: space-between;
-  margin-top: 24px;
-  padding-top: 16px;
-  border-top: 1px dashed var(--color-border);
-}
-.repo-btn {
-  display: inline-flex;
-  align-items: center;
-  gap: 4px;
-  padding: 6px 12px;
-  background: var(--color-surface);
-  color: var(--color-text);
-  border: 1px solid var(--color-border);
-  border-radius: 999px;
-  text-decoration: none;
-  font-size: 12px;
-  transition: all 0.2s ease;
-}
-.repo-btn:hover {
-  color: var(--color-primary);
-  background: var(--color-primary-bg);
-}
-.nav-pager {
-  display: flex;
-  gap: 8px;
-  flex-wrap: wrap;
-}
-.pager {
-  font-size: 12px;
-  color: var(--color-text-soft);
-  text-decoration: none;
-  padding: 4px 10px;
-  border-radius: 4px;
-  transition: color 0.2s ease;
-}
-.pager:hover {
-  color: var(--color-primary);
-}
-.pager.disabled {
-  color: var(--color-text-muted);
-  cursor: not-allowed;
 }
 .not-found {
   text-align: center;
@@ -270,11 +460,16 @@ const next = computed(() => (index.value >= 0 && index.value < ARTICLES.length -
 }
 .not-found button {
   padding: 8px 18px;
-  background: var(--gradient-button);
+  background: var(--color-primary);
   color: #fff;
   border: none;
-  border-radius: 999px;
+  border-radius: 4px;
   font-size: 13px;
   cursor: pointer;
+}
+
+strong {
+  color: var(--color-text);
+  font-weight: 600;
 }
 </style>
