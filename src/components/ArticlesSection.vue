@@ -2,7 +2,9 @@
 import { computed } from 'vue'
 import { ARTICLES } from '../data/site'
 
-const list = computed(() => ARTICLES.slice(0, 5))
+const list = computed(() =>
+  [...ARTICLES].sort((a, b) => (b.date || '').localeCompare(a.date || '')).slice(0, 5)
+)
 </script>
 
 <template>
