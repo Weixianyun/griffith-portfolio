@@ -73,7 +73,7 @@ const transitionName = computed(() => 'fade')
 }
 @media (max-width: 1280px) {
   .layout {
-    grid-template-columns: 220px minmax(0, 1fr) 260px;
+    grid-template-columns: 240px minmax(0, 1fr) 240px;
   }
 }
 @media (max-width: 1024px) {
