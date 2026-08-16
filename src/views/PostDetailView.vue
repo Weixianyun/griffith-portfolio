@@ -15,6 +15,12 @@ const index = computed(() => ARTICLES.findIndex(a => a.id === Number(route.param
 const prev = computed(() => (index.value > 0 ? ARTICLES[index.value - 1] : null))
 const next = computed(() => (index.value >= 0 && index.value < ARTICLES.length - 1 ? ARTICLES[index.value + 1] : null))
 
+// **xxx** → <strong>xxx</strong>，简单字符串替换（不解析链接）
+function renderMd(text) {
+  if (!text) return ''
+  return text.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
+}
+
 // 轻量 markdown 解析
 const blocks = computed(() => {
   if (!article.value?.content) return []
@@ -103,16 +109,16 @@ const blocks = computed(() => {
 
       <div v-if="article.content" class="post-body">
         <template v-for="(b, idx) in blocks" :key="idx">
-          <h2 v-if="b.type === 'h1'" class="md-h1">{{ b.text }}</h2>
-          <h2 v-else-if="b.type === 'h2'" class="md-h2">{{ b.text }}</h2>
-          <h3 v-else-if="b.type === 'h3'" class="md-h3">{{ b.text }}</h3>
-          <p v-else-if="b.type === 'p'" class="md-p">{{ b.text }}</p>
-          <blockquote v-else-if="b.type === 'quote'" class="md-quote">{{ b.text }}</blockquote>
+          <h2 v-if="b.type === 'h1'" class="md-h1" v-html="renderMd(b.text)" />
+          <h2 v-else-if="b.type === 'h2'" class="md-h2" v-html="renderMd(b.text)" />
+          <h3 v-else-if="b.type === 'h3'" class="md-h3" v-html="renderMd(b.text)" />
+          <p v-else-if="b.type === 'p'" class="md-p" v-html="renderMd(b.text)" />
+          <blockquote v-else-if="b.type === 'quote'" class="md-quote" v-html="renderMd(b.text)" />
           <ol v-else-if="b.type === 'ol'" class="md-ol">
-            <li v-for="(item, ii) in b.items" :key="ii">{{ item }}</li>
+            <li v-for="(item, ii) in b.items" :key="ii" v-html="renderMd(item)" />
           </ol>
           <ul v-else-if="b.type === 'ul'" class="md-ul">
-            <li v-for="(item, ii) in b.items" :key="ii">{{ item }}</li>
+            <li v-for="(item, ii) in b.items" :key="ii" v-html="renderMd(item)" />
           </ul>
           <div v-else-if="b.type === 'table'" class="md-table">
             <table>
@@ -121,7 +127,7 @@ const blocks = computed(() => {
               </thead>
               <tbody>
                 <tr v-for="(row, ri) in b.rows" :key="ri">
-                  <td v-for="(cell, ci) in row" :key="ci">{{ cell }}</td>
+                  <td v-for="(cell, ci) in row" :key="ci" v-html="renderMd(cell)" />
                 </tr>
               </tbody>
             </table>
