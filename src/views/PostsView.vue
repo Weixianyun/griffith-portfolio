@@ -5,14 +5,7 @@ import { ARTICLES } from '../data/site'
 <template>
   <div class="page">
     <h1 class="page-title">推文</h1>
-    <p v-if="!ARTICLES.length" class="empty">
-      <svg viewBox="0 0 24 24" width="48" height="48" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="color: var(--color-text-muted)">
-        <path d="M4 4h12a4 4 0 0 1 4 4v12H8a4 4 0 0 1-4-4V4z" />
-        <path d="M8 8h8M8 12h8M8 16h5" />
-      </svg>
-      <span>推文正在筹备中</span>
-      <small>随手记录所思、所想、所感</small>
-    </p>
+    <p v-if="!ARTICLES.length" class="empty">推文正在筹备中</p>
     <div v-else class="feed">
       <router-link
         v-for="a in ARTICLES"
@@ -21,47 +14,13 @@ import { ARTICLES } from '../data/site'
         class="post-link"
       >
         <article class="post glass">
-          <header class="post-head">
-            <div class="avatar" aria-hidden="true">G</div>
-            <div class="who">
-              <div class="name">Gr1ff1th</div>
-              <div class="meta">
-                {{ a.date }}<span v-if="a.tags?.length"> · {{ a.tags[0] }}</span><span v-if="a.words"> · 约 {{ a.words }} 字</span>
-              </div>
-            </div>
-          </header>
+          <div class="meta">
+            <span class="date">{{ a.date }}</span>
+            <span v-if="a.tags?.length" class="tag">{{ a.tags[0] }}</span>
+            <span v-if="a.words" class="words">{{ a.words }} 字</span>
+          </div>
           <h3 class="post-title">{{ a.title }}</h3>
           <p class="post-body">{{ a.excerpt }}</p>
-          <footer class="post-foot">
-            <span class="action">
-              <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" />
-              </svg>
-              点赞
-            </span>
-            <span class="action">
-              <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
-              </svg>
-              回复
-            </span>
-            <span class="action">
-              <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <circle cx="18" cy="5" r="3" />
-                <circle cx="6" cy="12" r="3" />
-                <circle cx="18" cy="19" r="3" />
-                <line x1="8.59" y1="13.51" x2="15.42" y2="17.49" />
-                <line x1="15.41" y1="6.51" x2="8.59" y2="10.49" />
-              </svg>
-              分享
-            </span>
-            <span class="action read-more">
-              <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M5 12h14M12 5l7 7-7 7" />
-              </svg>
-              阅读全文
-            </span>
-          </footer>
         </article>
       </router-link>
     </div>
@@ -74,34 +33,18 @@ import { ARTICLES } from '../data/site'
   min-height: 60vh;
 }
 .page-title {
-  font-size: 22px;
+  font-size: 20px;
   font-weight: 700;
   color: var(--color-text);
   margin-bottom: 20px;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-.page-title::before {
-  content: '';
-  display: inline-block;
-  width: 4px;
-  height: 20px;
-  background: var(--color-primary);
-  border-radius: 2px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--color-border);
 }
 .empty {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 12px;
   padding: 80px 20px;
-  color: var(--color-text-soft);
   text-align: center;
-}
-.empty small {
-  font-size: 12px;
   color: var(--color-text-muted);
+  font-size: 14px;
 }
 .feed {
   display: flex;
@@ -112,93 +55,48 @@ import { ARTICLES } from '../data/site'
   display: block;
   text-decoration: none;
   color: inherit;
-  border-radius: inherit;
-  transition: transform 0.2s ease;
 }
-.post-link:hover {
-  transform: translateY(-1px);
+.post {
+  padding: 18px 22px;
+  cursor: pointer;
+  transition: border-color 0.2s ease, transform 0.2s ease;
 }
 .post-link:hover .post {
   border-color: var(--color-primary);
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+  transform: translateY(-1px);
 }
-.post-link:hover .read-more {
-  color: var(--color-primary);
-}
-.post {
-  padding: 16px 18px;
-  cursor: pointer;
-  transition: border-color 0.2s ease, box-shadow 0.2s ease;
-}
-.post-head {
+.meta {
   display: flex;
-  align-items: center;
   gap: 10px;
-  margin-bottom: 10px;
-}
-.avatar {
-  width: 36px;
-  height: 36px;
-  border-radius: 50%;
-  background: var(--gradient-button);
-  color: #fff;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-weight: 700;
-  font-size: 14px;
-  flex-shrink: 0;
-}
-.who .name {
-  font-size: 14px;
-  font-weight: 600;
-  color: var(--color-text);
-  line-height: 1.2;
-}
-.who .meta {
-  font-size: 11px;
-  color: var(--color-text-muted);
-  margin-top: 2px;
-}
-.post-title {
-  font-size: 15px;
-  font-weight: 600;
-  color: var(--color-text);
-  margin-bottom: 6px;
-}
-.post-body {
-  font-size: 13px;
-  color: var(--color-text-soft);
-  line-height: 1.6;
-  white-space: pre-wrap;
-  display: -webkit-box;
-  -webkit-line-clamp: 3;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-}
-.post-foot {
-  display: flex;
-  gap: 20px;
-  margin-top: 12px;
-  padding-top: 10px;
-  border-top: 1px dashed var(--color-border);
-  flex-wrap: wrap;
-}
-.action {
-  display: inline-flex;
-  align-items: center;
-  gap: 4px;
   font-size: 12px;
   color: var(--color-text-muted);
-  cursor: pointer;
-  transition: color 0.2s ease;
+  margin-bottom: 8px;
+  align-items: center;
 }
-.action:hover {
+.tag {
   color: var(--color-primary);
 }
-.read-more {
+.words {
   margin-left: auto;
+  color: var(--color-text-muted);
+}
+.post-title {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--color-text);
+  line-height: 1.5;
+  margin-bottom: 6px;
+}
+.post-link:hover .post-title {
+  color: var(--color-primary);
+}
+.post-body {
+  font-size: 13.5px;
   color: var(--color-text-soft);
-  font-weight: 500;
+  line-height: 1.7;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
 </style>
