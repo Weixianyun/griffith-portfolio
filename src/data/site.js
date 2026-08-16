@@ -50,15 +50,16 @@ export const SKILLS = [
 
 export const TAGS = [
   { name: 'Vue', count: 8, color: '#42b883' },
-  { name: 'React', count: 5, color: '#61dafb' },
-  { name: 'TypeScript', count: 6, color: '#3178c6' },
+  { name: 'React', count: 6, color: '#61dafb' },
+  { name: 'TypeScript', count: 7, color: '#3178c6' },
   { name: 'Flutter', count: 4, color: '#02569b' },
   { name: 'Rust', count: 3, color: '#dea584' },
   { name: 'WebGL', count: 2, color: '#990000' },
-  { name: 'Python', count: 7, color: '#3776ab' },
+  { name: 'Python', count: 8, color: '#3776ab' },
   { name: 'Go', count: 2, color: '#00add8' },
   { name: 'Wails', count: 1, color: '#f5a623' },
-  { name: '随笔', count: 9, color: '#94a3b8' }
+  { name: '随笔', count: 9, color: '#94a3b8' },
+  { name: '低代码', count: 1, color: '#8b5cf6' }
 ]
 
 export const TECH_STACK = [
@@ -85,13 +86,16 @@ export const PROJECTS = [
 ]
 
 export const ARTICLES = [
-  // {
-  //   id: 1,
-  //   title: '示例日记',
-  //   date: '2026-08-15',
-  //   excerpt: '这是示例文章。',
-  //   tags: ['随笔']
-  // }
+  {
+    id: 1,
+    title: '一周一个 GitHub 神器 · 第 1 期：ToolJet——开源低代码神器，把内部工具开发效率拉满 10 倍',
+    date: '2026-08-16',
+    excerpt: 'ToolJet 是一款开源的企业级低代码 / AI 应用生成平台，React 18 + NestJS 全栈 TS，50+ 数据源直连，内置 LLM Agent 节点。本文从技术栈、核心功能、对比 Appsmith/Retool、独立开发者变现路径、中文友好度等维度做深度测评，附 3 个 AI Agent 新锐项目速览。',
+    tags: ['低代码', 'TypeScript', 'React'],
+    words: 1480,
+    sourceFile: 'src/data/posts/2026-08-16-tooljet.md',
+    repoUrl: 'https://github.com/ToolJet/ToolJet'
+  }
 ]
 
 export const ALBUMS = []
@@ -101,5 +105,6 @@ export const SITE_STATS = {
   articleCount: ARTICLES.length,
   categoryCount: 3,
   tagCount: TAGS.length,
-  totalWords: 0
+  totalWords: ARTICLES.reduce((s, a) => s + (a.words || 0), 0),
+  lastUpdated: '2026-08-16'
 }
