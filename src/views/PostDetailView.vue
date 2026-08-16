@@ -1,5 +1,5 @@
 <script setup>
-import { computed } from 'vue'
+import { computed, h } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { ARTICLES } from '../data/site'
 
@@ -15,27 +15,28 @@ const index = computed(() => ARTICLES.findIndex(a => a.id === Number(route.param
 const prev = computed(() => (index.value > 0 ? ARTICLES[index.value - 1] : null))
 const next = computed(() => (index.value >= 0 && index.value < ARTICLES.length - 1 ? ARTICLES[index.value + 1] : null))
 
-// 轻量 markdown 解析：支持 # ## 标题 / **bold** / 列表 / 引用 / 段落 / 表格
+// 内联解析：支持 **bold** 和 https://xxx 链接
 function parseInline(text) {
-  // **bold**
   const parts = []
-  let i = 0
-  let buf = ''
-  while (i < text.length) {
-    if (text[i] === '*' && text[i + 1] === '*') {
-      const end = text.indexOf('**', i + 2)
-      if (end > -1) {
-        if (buf) parts.push({ type: 'text', value: buf })
-        parts.push({ type: 'bold', value: text.slice(i + 2, end) })
-        buf = ''
-        i = end + 2
-        continue
-      }
+  // 匹配 **bold** 或 URL
+  const regex = /(\*\*[^*]+\*\*|https?:\/\/[^\s\u4e00-\u9fa5]+)/g
+  let lastIndex = 0
+  let match
+  while ((match = regex.exec(text)) !== null) {
+    if (match.index > lastIndex) {
+      parts.push({ type: 'text', value: text.slice(lastIndex, match.index) })
     }
-    buf += text[i]
-    i++
+    const m = match[0]
+    if (m.startsWith('**')) {
+      parts.push({ type: 'bold', value: m.slice(2, -2) })
+    } else {
+      parts.push({ type: 'link', value: m })
+    }
+    lastIndex = regex.lastIndex
   }
-  if (buf) parts.push({ type: 'text', value: buf })
+  if (lastIndex < text.length) {
+    parts.push({ type: 'text', value: text.slice(lastIndex) })
+  }
   return parts
 }
 
@@ -120,6 +121,19 @@ const blocks = computed(() => {
   }
   return result
 })
+
+// 渲染内联 token 数组为 vnode 列表
+function renderInline(parts) {
+  return parts.map((p, i) => {
+    if (p.type === 'bold') return h('strong', { key: i }, p.value)
+    if (p.type === 'link') {
+      // github.com 仓库链接显示成 github.com/owner/repo 这种简短形式
+      const short = p.value.replace(/^https?:\/\//, '').replace(/\.git$/, '').replace(/^github\.com\//, 'github.com/')
+      return h('a', { key: i, href: p.value, target: '_blank', rel: 'noopener', class: 'md-link' }, short)
+    }
+    return p.value.split(/(\n)/).map((seg, j) => seg === '\n' ? h('br', { key: `${i}-${j}` }) : seg)
+  })
+}
 </script>
 
 <template>
@@ -139,50 +153,23 @@ const blocks = computed(() => {
 
       <div v-if="article.content" class="post-body">
         <template v-for="(b, idx) in blocks" :key="idx">
-          <h2 v-if="b.type === 'h1'" class="md-h1">
-            <span v-for="(p, pi) in parseInline(b.text)" :key="pi">
-              <strong v-if="p.type === 'bold'">{{ p.value }}</strong>
-              <span v-else>{{ p.value }}</span>
-            </span>
-          </h2>
-          <h2 v-else-if="b.type === 'h2'" class="md-h2">
-            <span v-for="(p, pi) in parseInline(b.text)" :key="pi">
-              <strong v-if="p.type === 'bold'">{{ p.value }}</strong>
-              <span v-else>{{ p.value }}</span>
-            </span>
-          </h2>
-          <h3 v-else-if="b.type === 'h3'" class="md-h3">
-            <span v-for="(p, pi) in parseInline(b.text)" :key="pi">
-              <strong v-if="p.type === 'bold'">{{ p.value }}</strong>
-              <span v-else>{{ p.value }}</span>
-            </span>
-          </h3>
+          <h2 v-if="b.type === 'h1'" class="md-h1" v-html="b.text.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>').replace(/(https?:\/\/[^\s]+)/g, '<a class=&quot;md-link&quot; href=&quot;$1&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;>$1</a>')" />
+          <h2 v-else-if="b.type === 'h2'" class="md-h2" v-html="b.text.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>').replace(/(https?:\/\/[^\s]+)/g, '<a class=&quot;md-link&quot; href=&quot;$1&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;>$1</a>')" />
+          <h3 v-else-if="b.type === 'h3'" class="md-h3" v-html="b.text.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>').replace(/(https?:\/\/[^\s]+)/g, '<a class=&quot;md-link&quot; href=&quot;$1&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;>$1</a>')" />
           <p v-else-if="b.type === 'p'" class="md-p">
-            <span v-for="(p, pi) in parseInline(b.text)" :key="pi">
-              <strong v-if="p.type === 'bold'">{{ p.value }}</strong>
-              <span v-else>{{ p.value }}</span>
-            </span>
+            <component v-for="(node, ni) in renderInline(parseInline(b.text))" :is="node" :key="ni" />
           </p>
           <blockquote v-else-if="b.type === 'quote'" class="md-quote">
-            <span v-for="(p, pi) in parseInline(b.text)" :key="pi">
-              <strong v-if="p.type === 'bold'">{{ p.value }}</strong>
-              <span v-else>{{ p.value }}</span>
-            </span>
+            <component v-for="(node, qi) in renderInline(parseInline(b.text))" :is="node" :key="qi" />
           </blockquote>
           <ol v-else-if="b.type === 'ol'" class="md-ol">
             <li v-for="(item, ii) in b.items" :key="ii">
-              <span v-for="(p, pi) in parseInline(item)" :key="pi">
-                <strong v-if="p.type === 'bold'">{{ p.value }}</strong>
-                <span v-else>{{ p.value }}</span>
-              </span>
+              <component v-for="(node, li) in renderInline(parseInline(item))" :is="node" :key="li" />
             </li>
           </ol>
           <ul v-else-if="b.type === 'ul'" class="md-ul">
             <li v-for="(item, ii) in b.items" :key="ii">
-              <span v-for="(p, pi) in parseInline(item)" :key="pi">
-                <strong v-if="p.type === 'bold'">{{ p.value }}</strong>
-                <span v-else>{{ p.value }}</span>
-              </span>
+              <component v-for="(node, li) in renderInline(parseInline(item))" :is="node" :key="li" />
             </li>
           </ul>
           <div v-else-if="b.type === 'table'" class="md-table">
@@ -192,12 +179,7 @@ const blocks = computed(() => {
               </thead>
               <tbody>
                 <tr v-for="(row, ri) in b.rows" :key="ri">
-                  <td v-for="(cell, ci) in row" :key="ci">
-                    <span v-for="(p, pi) in parseInline(cell)" :key="pi">
-                      <strong v-if="p.type === 'bold'">{{ p.value }}</strong>
-                      <span v-else>{{ p.value }}</span>
-                    </span>
-                  </td>
+                  <td v-for="(cell, ci) in row" :key="ci">{{ cell }}</td>
                 </tr>
               </tbody>
             </table>
@@ -342,6 +324,17 @@ const blocks = computed(() => {
 .md-ol li::marker {
   color: var(--color-text-muted);
   font-weight: 500;
+}
+
+.md-link {
+  color: var(--color-primary);
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+  word-break: break-all;
+  transition: border-color 0.2s ease;
+}
+.md-link:hover {
+  border-bottom-color: var(--color-primary);
 }
 
 .md-table {
