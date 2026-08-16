@@ -19,6 +19,12 @@ const routes = [
     component: () => import('../views/PostsView.vue'),
     meta: { title: '推文' }
   },
+  {
+    path: '/posts/:id',
+    name: 'post-detail',
+    component: () => import('../views/PostDetailView.vue'),
+    meta: { title: '推文详情' }
+  },
   // 兼容旧链接 /diary → /posts
   {
     path: '/diary',
