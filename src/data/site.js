@@ -59,7 +59,8 @@ export const TAGS = [
   { name: 'Go', count: 2, color: '#00add8' },
   { name: 'Wails', count: 1, color: '#f5a623' },
   { name: '随笔', count: 9, color: '#94a3b8' },
-  { name: '低代码', count: 1, color: '#8b5cf6' }
+  { name: '低代码', count: 1, color: '#8b5cf6' },
+  { name: 'AI Agent', count: 1, color: '#06b6d4' }
 ]
 
 export const TECH_STACK = [
@@ -101,7 +102,7 @@ ToolJet 是一款开源的企业级低代码 / AI 应用生成平台，让你像
 
 ## 一句话定位
 
-拖拽式 UI 编辑器 + 多数据源直连 + 插件化业务逻辑 + 原生 AI Agent 能力。它是当前开源生态里，唯一同时满足"开源 + 原生 AI + 沙箱安全 + 中文友好"四要素的低代码平台。
+拖拽式 UI 编辑器 + 多数据源直连 + 插件化业务逻辑 + 原生 AI Agent 能力。它是当前开源生态里，唯一同时满足“开源 + 原生 AI + 沙箱安全 + 中文友好”四要素的低代码平台。
 
 ## 技术栈
 
@@ -174,6 +175,108 @@ ToolJet 是一款开源的企业级低代码 / AI 应用生成平台，让你像
 ToolJet 不是一个玩具级低代码，它是一个真正可以撑起中型企业内部工具链的生产级框架。如果你有内部工具重复造轮子的痛，强烈建议花一周试试。
 
 GitHub: https://github.com/ToolJet/ToolJet`
+  },
+  {
+    id: 2,
+    title: '深入理解 AI Agent：把 LLM 装上双手，10 章吃透工程',
+    date: '2026-08-17',
+    excerpt: 'bojieli/ai-agent-book 是李博杰主笔的中文 AI Agent 教材，10 章 + 95 个 uv 锁定实验，覆盖上下文工程、MCP 工具、Coding Agent、评估、SFT/RL 与多 Agent 协作，正文、PDF、代码全部 Apache-2.0 开源。本文从技术栈、对比、独立开发者变现角度深度测评。',
+    tags: ['AI Agent', 'Python', '随笔'],
+    words: 1443,
+    sourceFile: 'src/data/posts/2026-08-17-ai-agent-book.md',
+    repoUrl: 'https://github.com/bojieli/ai-agent-book',
+    content: `# 深入理解 AI Agent：把 LLM 装上双手，10 章吃透 Agent 工程
+
+当所有人都在堆 Agent Demo 时，李博杰（bojieli）把 10 章、95 个实验、13 种语言写成一本完全开源的工程书，把「Agent = LLM + 上下文 + 工具」这个公式从原理讲到生产。
+
+## 一句话定位
+
+它是当前 GitHub 上少有的、系统覆盖「上下文工程 / MCP 工具 / Coding Agent / 评估 / 后训练 / 多 Agent 协作」六大主题的中文 AI Agent 教材；正文、配图、代码、PDF 全部 Apache-2.0 开源，且配套实验可一键 uv 复现。
+
+## 技术栈
+
+- 语言：Python 3.11-3.13
+- 依赖管理：uv（提交 uv.lock，可锁定复现）
+- 文档工具链：pandoc + xelatex + ElegantBook（LaTeX 文档类）
+- 评测与训练：verl、TRL、Unsloth、vLLM、LiteLLM、Ollama、Playwright
+- 协议：MCP、Claude API、OpenAI 兼容、国产 Kimi / GLM / DeepSeek / Qwen
+- 许可：Apache-2.0，可商用、可改、可闭源分发
+
+## 核心功能
+
+**Agent 基础知识（Ch.1）** 给出 Agent 三件套的最小心智模型，并指出 Harness 工程才是真正的护城河。
+
+**上下文工程（Ch.2）** 系统讲 KV Cache、提示工程、Agent Skills、上下文压缩，把「上下文决定能力上限」落到可复现的实验。
+
+**用户记忆与知识库（Ch.3）** 覆盖跨会话记忆、RAG、结构化索引、知识图谱，给出在 LLM 上做长期记忆的工程范式。
+
+**工具与 MCP（Ch.4）** 拆解感知 / 执行 / 协作三类工具，引入事件驱动异步 Agent 与主动工具发现，紧贴 2026 年 MCP 协议落地节奏。
+
+**Coding Agent 与评估（Ch.5/Ch.7）** 13 个实验铺出生产级 Coding Agent 全景，并给出评测环境、指标、统计显著性方法。
+
+**后训练与持续进化（Ch.8/Ch.9）** 拆解 SFT / RL 何时选、工具调用如何内化、Agent 如何从运行轨迹自我迭代。
+
+**多 Agent 协作（Ch.10）** 给出协作框架、上下文共享与隔离策略，并配套 TalkAct 与斯坦福生成式 Agent 复现。
+
+## 对比 shareAI-lab/learn-claude-code 与 Lilian Weng 博客
+
+| 维度 | 本项目 | shareAI-lab/learn-claude-code | Lilian Weng 博客 |
+|---|---|---|---|
+| 开源 | Apache-2.0，正文+代码全开 | 仅代码，缺系统文档 | 仅博客，无实验 |
+| AI 支持 | 通用 Agent 六主题全覆盖 | 聚焦 Claude Code 子集 | 综述型，无代码 |
+| 配套实验 | 95 个 uv 锁定 | 单仓小型 demo | 0 |
+| 多语言 | 13 种（含中英西俄日韩） | 中英为主 | 英文 |
+| 系统性 | 教材级、10 章递进 | 工程笔记 | 单篇长文 |
+| 中文友好 | 原生中文 + 繁中 | 中文注释 | 翻译滞后 |
+
+差异化在于：把综述类长文升级为「可复现的教材」，并以 uv.lock 锁版本；多语言译本对国内独立开发者最直接可用。
+
+## 客观短板
+
+- 章节深度不均：Ch.8 后训练偏重实验演示，模型对齐理论只点到为止。
+- 配套实验需 GPU：第 8 章 SFT/RL 实验必须本地有 CUDA 环境，纯 CPU 跑不动。
+- 知识更新慢于主线：13 种语言译本同步靠社区，英文版偶有滞后。
+- 不提供 SaaS：只给源码与 PDF，没有托管 Playground。
+- 印刷版缺失：仅 PDF / EPUB / 在线阅读，无纸书渠道。
+
+## 适合谁，不适合谁
+
+适合：要把 LLM 真正落到生产系统的独立开发者；想从零搭 Agent 的全栈工程师；做 AI Agent 培训与教学的讲师；正在评估 Agent 选型与自研路径的架构师；研究生阶段想补 Agent 工程实践的高年级学生。
+
+不适合：只想 5 分钟跑通 Demo 的纯应用层用户；没有 Python 基础、只想看科普结论的非技术读者；要求完整印刷版的传统出版读者。
+
+## 普通开发者能学到什么
+
+- LLM 推理时 KV Cache 的工作机制与提示工程代价
+- 用 MCP 协议把工具抽象为可发现的服务
+- 上下文压缩与摘要策略在长任务里的工程取舍
+- 评测驱动的 Agent 选型与统计显著性检验
+- 简单 RL 配方在工具调用任务上的样本效率边界
+
+## 独立开发者价值
+
+上手成本低，会 Python 加 LLM 基础调用就能跑 Ch.1-4 的全部实验，Ch.5-7 跟着 uv 同步即可，Ch.8-10 视硬件选做。
+
+二次开发空间很大，正文是 Markdown，代码是 uv 锁定包，改一段就能 fork 出自己的内部培训材料；甚至可以直接接 LLM API 改写为「公司内部的 Agent 工程手册」。
+
+变现路径有三条：一是把 10 章拆成公众号 / 知乎 / B 站付费专栏，单价 99-299 元；二是基于配套实验做线下 AI Agent 训练营，1-2 天课程定价 1500-3000 元；三是把第 6 章 Computer Use 改造为「门店巡检 / 报表生成」垂直 SaaS，按月订阅 99-499 元。
+
+合规友好度极高，Apache-2.0 允许商用、修改、闭源再分发，仅需保留版权声明，对国内独立开发者做商业产品零法律摩擦。
+
+## 中文友好度
+
+- 文档：中文为原版，繁中、英文、西班牙、俄、日、韩等 13 种语言已上线
+- 社区：作者长期在 GitHub Issue、知乎、即刻与读者互动，PR 接受勘误
+- 响应：Issue 平均 1-3 天首次回复，作者本人高频维护
+- 访问：仓库、PDF、EPUB、在线阅读站点全程可直连 GitHub，国内访问稳定
+
+## 总结
+
+《深入理解 AI Agent》不是又一本「用 ChatGPT 写个客服」的速成读物，它把 Harness、上下文、MCP、评估、SFT/RL、多 Agent 这些工程关键词压进 10 章、95 个实验。
+
+如果你准备做 Agent 相关产品或系统升级，这一本可以顶过去三本英文综述的工程量。
+
+GitHub: https://github.com/bojieli/ai-agent-book`
   }
 ]
 
@@ -185,5 +288,5 @@ export const SITE_STATS = {
   categoryCount: 3,
   tagCount: TAGS.length,
   totalWords: ARTICLES.reduce((s, a) => s + (a.words || 0), 0),
-  lastUpdated: '2026-08-16'
+  lastUpdated: '2026-08-17'
 }
