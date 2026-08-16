@@ -92,7 +92,7 @@ export const ARTICLES = [
     date: '2026-08-16',
     excerpt: 'ToolJet 是一款开源的企业级低代码 / AI 应用生成平台，React 18 + NestJS 全栈 TS，50+ 数据源直连，内置 LLM Agent 节点。本文从技术栈、核心功能、与同类项目对比、独立开发者变现路径等维度展开。',
     tags: ['低代码', 'TypeScript', 'React'],
-    words: 1280,
+    words: 1180,
     sourceFile: 'src/data/posts/2026-08-16-tooljet.md',
     repoUrl: 'https://github.com/ToolJet/ToolJet',
     content: `# ToolJet：开源低代码平台，把内部工具开发效率拉满 10 倍
