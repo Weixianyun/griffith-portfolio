@@ -18,14 +18,25 @@ const list = computed(() => ARTICLES.slice(0, 5))
     </h2>
 
     <div v-if="list.length" class="list glass">
-      <a v-for="a in list" :key="a.id" href="#" class="item" @click.prevent>
+      <router-link
+        v-for="a in list"
+        :key="a.id"
+        :to="`/posts/${a.id}`"
+        class="item"
+      >
         <div class="meta">
           <span class="date">{{ a.date }}</span>
           <span class="cat">{{ a.tags?.[0] || '随笔' }}</span>
         </div>
         <div class="title">{{ a.title }}</div>
         <div class="excerpt">{{ a.excerpt }}</div>
-      </a>
+        <div class="arrow">
+          阅读全文
+          <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M5 12h14M12 5l7 7-7 7" />
+          </svg>
+        </div>
+      </router-link>
     </div>
 
     <div v-else class="empty glass">
@@ -54,9 +65,16 @@ const list = computed(() => ARTICLES.slice(0, 5))
   border-radius: var(--radius-sm);
   transition: background 0.2s ease;
   color: var(--color-text);
+  text-decoration: none;
+  position: relative;
 }
 .item:hover {
   background: var(--color-primary-bg);
+}
+.item:hover .arrow {
+  color: var(--color-primary);
+  opacity: 1;
+  transform: translateX(0);
 }
 .meta {
   display: flex;
@@ -79,6 +97,17 @@ const list = computed(() => ARTICLES.slice(0, 5))
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
+}
+.arrow {
+  font-size: 12px;
+  color: var(--color-text-muted);
+  margin-top: 4px;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  opacity: 0;
+  transform: translateX(-4px);
+  transition: all 0.2s ease;
 }
 .empty {
   padding: 32px 20px;
