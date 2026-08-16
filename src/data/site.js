@@ -92,7 +92,7 @@ export const ARTICLES = [
     date: '2026-08-16',
     excerpt: 'ToolJet 是一款开源的企业级低代码 / AI 应用生成平台，React 18 + NestJS 全栈 TS，50+ 数据源直连，内置 LLM Agent 节点。本文从技术栈、核心功能、与同类项目对比、独立开发者变现路径等维度展开。',
     tags: ['低代码', 'TypeScript', 'React'],
-    words: 1380,
+    words: 1280,
     sourceFile: 'src/data/posts/2026-08-16-tooljet.md',
     repoUrl: 'https://github.com/ToolJet/ToolJet',
     content: `# ToolJet：开源低代码平台，把内部工具开发效率拉满 10 倍
@@ -169,17 +169,11 @@ ToolJet 是一款开源的企业级低代码 / AI 应用生成平台，让你像
 
 官方中文文档翻译完成度 80% 以上。中文社区活跃，微信群和飞书群 2000+ 开发者。Issue 中英文均响应，平均 24 小时内。国内多家厂商基于 ToolJet 做二次发行。
 
-## 本期附赠：新锐项目
-
-PrimeIntellect-ai/prime-agent：自进化编码 Agent，新一代 RLM 范式，近期增长凶猛。
-
-cloudflare/computer：给 AI Agent 一台云端电脑，Cloudflare 生态的又一大招。
-
-NVIDIA-NeMo/Switchyard：LLM 流量路由网关，多模型切换加成本优化，是 Agent 基础设施层。
-
 ## 总结
 
-ToolJet 不是一个玩具级低代码，它是一个真正可以撑起中型企业内部工具链的生产级框架。如果你有内部工具重复造轮子的痛，强烈建议花一周试试。`
+ToolJet 不是一个玩具级低代码，它是一个真正可以撑起中型企业内部工具链的生产级框架。如果你有内部工具重复造轮子的痛，强烈建议花一周试试。
+
+GitHub: https://github.com/ToolJet/ToolJet`
   }
 ]
 
