@@ -1,5 +1,5 @@
 <script setup>
-import { computed, h } from 'vue'
+import { computed } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { ARTICLES } from '../data/site'
 
@@ -15,31 +15,7 @@ const index = computed(() => ARTICLES.findIndex(a => a.id === Number(route.param
 const prev = computed(() => (index.value > 0 ? ARTICLES[index.value - 1] : null))
 const next = computed(() => (index.value >= 0 && index.value < ARTICLES.length - 1 ? ARTICLES[index.value + 1] : null))
 
-// 内联解析：支持 **bold** 和 https://xxx 链接
-function parseInline(text) {
-  const parts = []
-  // 匹配 **bold** 或 URL
-  const regex = /(\*\*[^*]+\*\*|https?:\/\/[^\s\u4e00-\u9fa5]+)/g
-  let lastIndex = 0
-  let match
-  while ((match = regex.exec(text)) !== null) {
-    if (match.index > lastIndex) {
-      parts.push({ type: 'text', value: text.slice(lastIndex, match.index) })
-    }
-    const m = match[0]
-    if (m.startsWith('**')) {
-      parts.push({ type: 'bold', value: m.slice(2, -2) })
-    } else {
-      parts.push({ type: 'link', value: m })
-    }
-    lastIndex = regex.lastIndex
-  }
-  if (lastIndex < text.length) {
-    parts.push({ type: 'text', value: text.slice(lastIndex) })
-  }
-  return parts
-}
-
+// 轻量 markdown 解析
 const blocks = computed(() => {
   if (!article.value?.content) return []
   const lines = article.value.content.split('\n')
@@ -51,7 +27,7 @@ const blocks = computed(() => {
 
     if (!trimmed) { i++; continue }
 
-    // 表格：连续 | ... | 行
+    // 表格
     if (trimmed.startsWith('|') && trimmed.endsWith('|') && i + 1 < lines.length && /^\|[\s\-:|]+\|$/.test(lines[i + 1].trim())) {
       const headers = trimmed.slice(1, -1).split('|').map(s => s.trim())
       i += 2
@@ -64,21 +40,10 @@ const blocks = computed(() => {
       continue
     }
 
-    // 标题
-    if (trimmed.startsWith('### ')) {
-      result.push({ type: 'h3', text: trimmed.slice(4) })
-      i++; continue
-    }
-    if (trimmed.startsWith('## ')) {
-      result.push({ type: 'h2', text: trimmed.slice(3) })
-      i++; continue
-    }
-    if (trimmed.startsWith('# ')) {
-      result.push({ type: 'h1', text: trimmed.slice(2) })
-      i++; continue
-    }
+    if (trimmed.startsWith('### ')) { result.push({ type: 'h3', text: trimmed.slice(4) }); i++; continue }
+    if (trimmed.startsWith('## ')) { result.push({ type: 'h2', text: trimmed.slice(3) }); i++; continue }
+    if (trimmed.startsWith('# ')) { result.push({ type: 'h1', text: trimmed.slice(2) }); i++; continue }
 
-    // 引用
     if (trimmed.startsWith('> ')) {
       const quoteLines = []
       while (i < lines.length && lines[i].trim().startsWith('> ')) {
@@ -89,7 +54,6 @@ const blocks = computed(() => {
       continue
     }
 
-    // 有序列表
     if (/^\d+\.\s/.test(trimmed)) {
       const items = []
       while (i < lines.length && /^\s*\d+\.\s/.test(lines[i])) {
@@ -100,7 +64,6 @@ const blocks = computed(() => {
       continue
     }
 
-    // 无序列表
     if (trimmed.startsWith('- ') || trimmed.startsWith('* ')) {
       const items = []
       while (i < lines.length && (lines[i].trim().startsWith('- ') || lines[i].trim().startsWith('* '))) {
@@ -111,7 +74,7 @@ const blocks = computed(() => {
       continue
     }
 
-    // 普通段落（合并连续行）
+    // 普通段落
     const para = []
     while (i < lines.length && lines[i].trim() && !lines[i].trim().startsWith('#') && !lines[i].trim().startsWith('- ') && !lines[i].trim().startsWith('* ') && !lines[i].trim().startsWith('> ') && !/^\d+\.\s/.test(lines[i].trim()) && !lines[i].trim().startsWith('|')) {
       para.push(lines[i].trim())
@@ -121,19 +84,6 @@ const blocks = computed(() => {
   }
   return result
 })
-
-// 渲染内联 token 数组为 vnode 列表
-function renderInline(parts) {
-  return parts.map((p, i) => {
-    if (p.type === 'bold') return h('strong', { key: i }, p.value)
-    if (p.type === 'link') {
-      // github.com 仓库链接显示成 github.com/owner/repo 这种简短形式
-      const short = p.value.replace(/^https?:\/\//, '').replace(/\.git$/, '').replace(/^github\.com\//, 'github.com/')
-      return h('a', { key: i, href: p.value, target: '_blank', rel: 'noopener', class: 'md-link' }, short)
-    }
-    return p.value.split(/(\n)/).map((seg, j) => seg === '\n' ? h('br', { key: `${i}-${j}` }) : seg)
-  })
-}
 </script>
 
 <template>
@@ -153,24 +103,16 @@ function renderInline(parts) {
 
       <div v-if="article.content" class="post-body">
         <template v-for="(b, idx) in blocks" :key="idx">
-          <h2 v-if="b.type === 'h1'" class="md-h1" v-html="b.text.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>').replace(/(https?:\/\/[^\s]+)/g, '<a class=&quot;md-link&quot; href=&quot;$1&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;>$1</a>')" />
-          <h2 v-else-if="b.type === 'h2'" class="md-h2" v-html="b.text.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>').replace(/(https?:\/\/[^\s]+)/g, '<a class=&quot;md-link&quot; href=&quot;$1&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;>$1</a>')" />
-          <h3 v-else-if="b.type === 'h3'" class="md-h3" v-html="b.text.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>').replace(/(https?:\/\/[^\s]+)/g, '<a class=&quot;md-link&quot; href=&quot;$1&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;>$1</a>')" />
-          <p v-else-if="b.type === 'p'" class="md-p">
-            <component v-for="(node, ni) in renderInline(parseInline(b.text))" :is="node" :key="ni" />
-          </p>
-          <blockquote v-else-if="b.type === 'quote'" class="md-quote">
-            <component v-for="(node, qi) in renderInline(parseInline(b.text))" :is="node" :key="qi" />
-          </blockquote>
+          <h2 v-if="b.type === 'h1'" class="md-h1">{{ b.text }}</h2>
+          <h2 v-else-if="b.type === 'h2'" class="md-h2">{{ b.text }}</h2>
+          <h3 v-else-if="b.type === 'h3'" class="md-h3">{{ b.text }}</h3>
+          <p v-else-if="b.type === 'p'" class="md-p">{{ b.text }}</p>
+          <blockquote v-else-if="b.type === 'quote'" class="md-quote">{{ b.text }}</blockquote>
           <ol v-else-if="b.type === 'ol'" class="md-ol">
-            <li v-for="(item, ii) in b.items" :key="ii">
-              <component v-for="(node, li) in renderInline(parseInline(item))" :is="node" :key="li" />
-            </li>
+            <li v-for="(item, ii) in b.items" :key="ii">{{ item }}</li>
           </ol>
           <ul v-else-if="b.type === 'ul'" class="md-ul">
-            <li v-for="(item, ii) in b.items" :key="ii">
-              <component v-for="(node, li) in renderInline(parseInline(item))" :is="node" :key="li" />
-            </li>
+            <li v-for="(item, ii) in b.items" :key="ii">{{ item }}</li>
           </ul>
           <div v-else-if="b.type === 'table'" class="md-table">
             <table>
@@ -194,7 +136,6 @@ function renderInline(parts) {
 
       <footer class="post-foot">
         <a v-if="article.repoUrl" :href="article.repoUrl" target="_blank" rel="noopener" class="repo-btn">GitHub 项目</a>
-
         <div class="nav-pager">
           <router-link v-if="prev" :to="`/posts/${prev.id}`" class="pager">
             ← {{ prev.title.length > 18 ? prev.title.slice(0, 18) + '…' : prev.title }}
@@ -324,17 +265,6 @@ function renderInline(parts) {
 .md-ol li::marker {
   color: var(--color-text-muted);
   font-weight: 500;
-}
-
-.md-link {
-  color: var(--color-primary);
-  text-decoration: none;
-  border-bottom: 1px solid transparent;
-  word-break: break-all;
-  transition: border-color 0.2s ease;
-}
-.md-link:hover {
-  border-bottom-color: var(--color-primary);
 }
 
 .md-table {
