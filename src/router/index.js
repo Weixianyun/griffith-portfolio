@@ -19,6 +19,11 @@ const routes = [
     component: () => import('../views/PostsView.vue'),
     meta: { title: '推文' }
   },
+  // 兼容旧链接 /diary → /posts
+  {
+    path: '/diary',
+    redirect: '/posts'
+  },
   {
     path: '/album',
     name: 'album',
@@ -30,6 +35,11 @@ const routes = [
     name: 'about',
     component: () => import('../views/AboutView.vue'),
     meta: { title: '关于' }
+  },
+  // 兜底：未匹配路径跳首页
+  {
+    path: '/:pathMatch(.*)*',
+    redirect: '/'
   }
 ]
 
