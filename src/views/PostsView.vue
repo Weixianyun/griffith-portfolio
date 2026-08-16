@@ -1,14 +1,19 @@
 <script setup>
+import { computed } from 'vue'
 import { ARTICLES } from '../data/site'
+
+const sortedArticles = computed(() =>
+  [...ARTICLES].sort((a, b) => (b.date || '').localeCompare(a.date || ''))
+)
 </script>
 
 <template>
   <div class="page">
     <h1 class="page-title">推文</h1>
-    <p v-if="!ARTICLES.length" class="empty">推文正在筹备中</p>
+    <p v-if="!sortedArticles.length" class="empty">推文正在筹备中</p>
     <div v-else class="feed">
       <router-link
-        v-for="a in ARTICLES"
+        v-for="a in sortedArticles"
         :key="a.id"
         :to="`/posts/${a.id}`"
         class="post-link"
