@@ -14,41 +14,56 @@ import { ARTICLES } from '../data/site'
       <small>随手记录所思、所想、所感</small>
     </p>
     <div v-else class="feed">
-      <article v-for="a in ARTICLES" :key="a.id" class="post glass">
-        <header class="post-head">
-          <div class="avatar" aria-hidden="true">G</div>
-          <div class="who">
-            <div class="name">Gr1ff1th</div>
-            <div class="meta">{{ a.date }}<span v-if="a.tags?.length"> · {{ a.tags[0] }}</span></div>
-          </div>
-        </header>
-        <h3 class="post-title">{{ a.title }}</h3>
-        <p class="post-body">{{ a.excerpt }}</p>
-        <footer class="post-foot">
-          <span class="action">
-            <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" />
-            </svg>
-            点赞
-          </span>
-          <span class="action">
-            <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
-            </svg>
-            回复
-          </span>
-          <span class="action">
-            <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <circle cx="18" cy="5" r="3" />
-              <circle cx="6" cy="12" r="3" />
-              <circle cx="18" cy="19" r="3" />
-              <line x1="8.59" y1="13.51" x2="15.42" y2="17.49" />
-              <line x1="15.41" y1="6.51" x2="8.59" y2="10.49" />
-            </svg>
-            分享
-          </span>
-        </footer>
-      </article>
+      <router-link
+        v-for="a in ARTICLES"
+        :key="a.id"
+        :to="`/posts/${a.id}`"
+        class="post-link"
+      >
+        <article class="post glass">
+          <header class="post-head">
+            <div class="avatar" aria-hidden="true">G</div>
+            <div class="who">
+              <div class="name">Gr1ff1th</div>
+              <div class="meta">
+                {{ a.date }}<span v-if="a.tags?.length"> · {{ a.tags[0] }}</span><span v-if="a.words"> · 约 {{ a.words }} 字</span>
+              </div>
+            </div>
+          </header>
+          <h3 class="post-title">{{ a.title }}</h3>
+          <p class="post-body">{{ a.excerpt }}</p>
+          <footer class="post-foot">
+            <span class="action">
+              <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" />
+              </svg>
+              点赞
+            </span>
+            <span class="action">
+              <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
+              </svg>
+              回复
+            </span>
+            <span class="action">
+              <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="18" cy="5" r="3" />
+                <circle cx="6" cy="12" r="3" />
+                <circle cx="18" cy="19" r="3" />
+                <line x1="8.59" y1="13.51" x2="15.42" y2="17.49" />
+                <line x1="15.41" y1="6.51" x2="8.59" y2="10.49" />
+              </svg>
+              分享
+            </span>
+            <span class="action read-more">
+              <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M5 12h14M12 5l7 7-7 7" />
+              </svg>
+              阅读全文
+            </span>
+          </footer>
+        </article>
+      </router-link>
     </div>
   </div>
 </template>
@@ -93,8 +108,27 @@ import { ARTICLES } from '../data/site'
   flex-direction: column;
   gap: 12px;
 }
+.post-link {
+  display: block;
+  text-decoration: none;
+  color: inherit;
+  border-radius: inherit;
+  transition: transform 0.2s ease;
+}
+.post-link:hover {
+  transform: translateY(-1px);
+}
+.post-link:hover .post {
+  border-color: var(--color-primary);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+}
+.post-link:hover .read-more {
+  color: var(--color-primary);
+}
 .post {
   padding: 16px 18px;
+  cursor: pointer;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
 }
 .post-head {
   display: flex;
@@ -137,6 +171,10 @@ import { ARTICLES } from '../data/site'
   color: var(--color-text-soft);
   line-height: 1.6;
   white-space: pre-wrap;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
 .post-foot {
   display: flex;
@@ -144,6 +182,7 @@ import { ARTICLES } from '../data/site'
   margin-top: 12px;
   padding-top: 10px;
   border-top: 1px dashed var(--color-border);
+  flex-wrap: wrap;
 }
 .action {
   display: inline-flex;
@@ -156,5 +195,10 @@ import { ARTICLES } from '../data/site'
 }
 .action:hover {
   color: var(--color-primary);
+}
+.read-more {
+  margin-left: auto;
+  color: var(--color-text-soft);
+  font-weight: 500;
 }
 </style>
