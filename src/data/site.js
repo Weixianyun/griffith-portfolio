@@ -29,6 +29,33 @@ export const SITE = {
   ]
 }
 
+export const QUICK_LINKS = [
+  {
+    key: 'github',
+    label: 'GitHub',
+    url: 'https://github.com/Weixianyun',
+    color: '#0f172a'
+  },
+  {
+    key: 'bing',
+    label: 'Bing',
+    url: 'https://www.bing.com/',
+    color: '#008373'
+  },
+  {
+    key: 'bilibili',
+    label: 'Bilibili',
+    url: 'https://space.bilibili.com/',
+    color: '#fb7299'
+  },
+  {
+    key: 'youtube',
+    label: 'YouTube',
+    url: 'https://www.youtube.com/',
+    color: '#ff0000'
+  }
+]
+
 export const NOTICES = {
   light: {
     jp: '光の鷹は翔ぶ 白銀の翼、蒼き眼',

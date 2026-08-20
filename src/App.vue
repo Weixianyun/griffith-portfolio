@@ -6,6 +6,7 @@ import AppFooter from './components/AppFooter.vue'
 import FeatherBackground from './components/FeatherBackground.vue'
 import LeftSidebar from './components/LeftSidebar.vue'
 import RightSidebar from './components/RightSidebar.vue'
+import QuickLinksBar from './components/QuickLinksBar.vue'
 
 const route = useRoute()
 const transitionName = computed(() => 'fade')
@@ -17,6 +18,7 @@ const transitionName = computed(() => 'fade')
     <AppHeader />
 
     <main class="app-main">
+      <QuickLinksBar />
       <div class="layout">
         <aside class="layout-left">
           <LeftSidebar />
