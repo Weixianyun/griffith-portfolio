@@ -616,6 +616,111 @@ chrome-devtools-mcp 不是又一个 Playwright 套壳，它是 Google 把自家 
 如果你正面对「AI 怎么看见浏览器真实状态」这个问题，强烈建议把它接进现有的 MCP 客户端，比从零搭一个浏览器代理稳得多。
 
 GitHub: https://github.com/ChromeDevTools/chrome-devtools-mcp`
+  },
+  {
+    id: 6,
+    title: 'Dify：把 LLM 应用从原型到生产的开源一站式平台',
+    date: '2026-09-07',
+    excerpt: 'Dify 是当前 GitHub 上最成熟的 LLM 应用开发平台，以可视化画布统一编排 Workflow / Agent / RAG / 模型管理 / LLMOps，15 种语言官方文档，自带后端即服务 API。本文从技术栈、核心功能、与 n8n / Flowise 对比、独立开发者变现路径展开。',
+    tags: ['TypeScript', 'AI Agent'],
+    words: 1380,
+    sourceFile: 'src/data/posts/2026-09-07-dify.md',
+    repoUrl: 'https://github.com/langgenius/dify',
+    content: `# Dify：把 LLM 应用从原型到生产的开源一站式平台
+
+在 AI Agent 概念漫天飞的 2026 年，真正能让产品经理自己搭出 RAG 与工作流的，是 langgenius/dify 这类 LLM-native 可视化平台。它把 Workflow、RAG、Agent、模型管理、LLMOps 压进同一套后端即服务，让 AI 应用像搭积木一样从 demo 走到生产。
+
+## 一句话定位
+
+它是当前 GitHub 上最成熟的 LLM 应用开发平台，以可视化画布统一编排 Workflow / Agent / RAG / 模型 / 观测，对外暴露完整 API 与 15 种语言官方文档，把 LLM 应用底座做成了开箱即用的工程产品。
+
+## 技术栈
+
+- 前端：React 18 + TypeScript + Vite + Redux Toolkit
+- 后端 API：Python 3.11 + Flask + Gunicorn
+- 异步任务：Celery + Redis，处理文档解析与批处理
+- 数据库：PostgreSQL 13+（主存），Weaviate / Qdrant / Milvus / pgvector / Chroma（向量库可选）
+- 模型接入：覆盖 GPT、Claude、Gemini、Mistral、Llama 3、Qwen、DeepSeek、GLM、Kimi 等数百家方案，OpenAI 兼容协议可一键接入
+- 协议：REST、Streaming SSE、Function Calling、ReAct、Tool Calling
+- 许可：Dify Open Source License（基于 Apache 2.0 加附加条款，社区版可自托管商用）
+
+## 核心功能
+
+**可视化 Workflow 画布** 拖拽节点搭出分支、循环、并行、HTTP 节点、代码节点，所见即所得调试。
+
+**RAG Pipeline 一条龙** 文档摄入支持 PDF / PPT / Word / Excel / 网页 / Notion，文本提取、清洗、分块、向量化、检索、重排序全流程可配。
+
+**Agent 节点** 支持 Function Calling 与 ReAct，内置 Google Search、DALL·E、Stable Diffusion 等 50+ 工具，私有工具可注册为 OpenAPI 或 MCP。
+
+**Prompt IDE** 多模型对比、变量调试、对话历史标注，支持文本转语音扩展节点。
+
+**LLMOps 与观测** 与 Opik、Langfuse、Arize Phoenix 集成，生产日志、成本、延迟、命中指标实时可视化。
+
+**后端即服务** 所有能力暴露为 REST API，可直接嵌入业务系统。
+
+## 对比 n8n 与 Flowise
+
+| 维度 | Dify | n8n | Flowise |
+|---|---|---|---|
+| 开源 | Apache-2.0 + 附加条款 | Sustainable Use | Apache-2.0 |
+| AI 原生 | Workflow + Agent + RAG 三合一 | 通用工作流 + AI 节点 | Agent + RAG 为主 |
+| 模型支持 | 数百家推理 + 自托管 | 主要 OpenAI 兼容 | OpenAI 兼容 |
+| 工具数量 | 50+ 内置 + MCP | 1500+ 集成 | 自建为主 |
+| RAG 能力 | 一条龙 Pipeline | 需自建节点 | 基础 |
+| 多租户 RBAC | 完善 | 完善 | 较薄 |
+| 中文文档 | 官方完整 | 社区翻译 | 一般 |
+| 上手成本 | 中 | 中 | 低 |
+
+差异化在于，Dify 把 LLM 应用特有的 Workflow、Agent、RAG、模型、观测、API 做成一个产品概念，n8n 偏通用工作流，Flowise 偏 LangChain 复刻。Dify 是三者中唯一能独立支撑 LLM 应用从 demo 到生产完整链路的开源项目。
+
+## 客观短板
+
+- 协议为 Dify Open Source License：基于 Apache 2.0 加附加条件，多租户 SaaS 转售需细读边界，自托管内部用无障碍。
+- 复杂工作流调试以节点级日志为主，超长链路可观测性需配合 Langfuse 等外部工具。
+- 知识库大规模下（>百万 chunks）需替换默认检索后端为 Milvus 或 Weaviate，运维成本不低。
+- Workflow 编辑器并行节点超过 50 个时偶发性能问题，需拆分工作流。
+- 模型适配滞后于新发布模型，社区贡献 Provider PR 合并节奏不稳定。
+- 资源密集：官方推荐最低 2 核 4G，生产建议 8 核 16G 起。
+
+## 适合谁，不适合谁
+
+适合：要把 LLM 能力塞进企业既有系统的 AI 应用架构师；做 RAG、知识库、智能客服的产品与工程团队；想统一公司多模型调用与观测的 AI 中台建设者；正在评估自研 LLM 平台还是用开源的工程负责人。
+
+不适合：直接对外提供多租户 SaaS 且不愿接受附加条款的纯 ToC 创业者；只需单一 ChatBot 不需要工作流的极简场景；必须私有化部署但对 Go、Rust 性能有强诉求的极端低延迟系统。
+
+## 普通开发者能学到什么
+
+- LLM 应用的全栈工程范式：前端画布到后端异步队列、再到向量库的可插拔架构
+- Workflow 编辑器的状态机设计：节点、连边、上下文与变量作用域的 JSON Schema 表达
+- RAG 流水线工程化：文档解析、分块、Embedding、检索、重排序的可配置抽象
+- 多模型适配层模式：统一 Provider 接口下如何封装 OpenAI、Anthropic、自托管协议
+- LLMOps 设计原则：日志、成本、延迟、命中与人类反馈如何沉淀为生产可观测性
+- 后端即服务 API 暴露的工程边界：哪些能力做成前端可拖拽，哪些必须代码调用
+
+## 独立开发者价值
+
+上手成本中等，会 Python 加一点 JS，一周可搭出 RAG 与 Agent 的 MVP。最大优势是把 AI 应用的工程化标准化了，独立开发者无需自写 RAG、Agent 框架、观测系统，可直接套 UI 做行业 SaaS，例如法律咨询助手、跨境电商选品问答。
+
+二次开发空间充足。前端 React 与后端 Python 都是主流栈，自定义节点、Provider、检索后端、Agent 工具都有官方扩展点。社区贡献的 Provider 与工具体系持续增长，fork 改一改就能交付企业版。
+
+变现路径有三条：一是给中小企业做 Dify 私有化部署加行业知识库定制，按项目 5-20 万；二是套垂直 UI 做订阅制 SaaS，例如教育 AI 助教、法律 AI 咨询，月费 99-999 元；三是做 Dify 培训课程，把搭应用能力打包卖给想入行的工程师。
+
+合规友好度高。协议基于 Apache 2.0 加少量附加条件，自托管与商业产品集成无法律摩擦，模型调用可全部走国内推理服务，规避跨境数据合规风险。
+
+## 中文友好度
+
+- 文档：官方简体中文覆盖安装、模型接入、Workflow、Agent、API 全链路，与英文版同步
+- 社区：Discord 万级成员，国内飞书群、微信群、知乎活跃，Dify 中文版核心贡献者持续维护
+- Issue：中英文均响应，平均 1-3 天首次回复，PR 接受中文描述
+- 访问：GitHub、官方文档、Docker Hub、Helm Chart 国内均可直连
+
+## 总结
+
+Dify 不是又一个 LangChain 复刻，它把 LLM 应用特有的工程问题沉淀为产品，让 AI 应用的最后一公里成为可复用的工程资产。
+
+如果你正面对 LLM 能力如何落到生产系统这个问题，建议花一个周末把 Dify 跑通一遍。
+
+GitHub: https://github.com/langgenius/dify`
   }
 ]
 
@@ -627,5 +732,5 @@ export const SITE_STATS = {
   categoryCount: 3,
   tagCount: TAGS.length,
   totalWords: ARTICLES.reduce((s, a) => s + (a.words || 0), 0),
-  lastUpdated: '2026-09-01'
+  lastUpdated: '2026-09-07'
 }
