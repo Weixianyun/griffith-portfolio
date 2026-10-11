@@ -8,25 +8,72 @@ export const SITE = {
   startDate: '2026-08-15',
   copyright: '© 2026 鹰の团 · Gr1ff1th. All Rights Reserved.',
   socials: [
-    { key: 'github', label: 'GitHub', url: 'https://github.com/Weixianyun', color: '#0f172a' },
-    { key: 'bilibili', label: 'Bilibili', url: 'https://space.bilibili.com/', color: '#fb7299' },
-    { key: 'email', label: 'Email', url: 'mailto:weixianyun55@gmail.com', color: '#3b82f6' }
+    {
+      key: 'github',
+      label: 'GitHub',
+      url: 'https://github.com/Weixianyun',
+      color: '#0f172a'
+    },
+    {
+      key: 'bilibili',
+      label: 'Bilibili',
+      url: 'https://space.bilibili.com/',
+      color: '#fb7299'
+    },
+    {
+      key: 'email',
+      label: 'Email',
+      url: 'mailto:weixianyun55@gmail.com',
+      color: '#3b82f6'
+    }
   ]
 }
 
 export const QUICK_LINKS = [
-  { key: 'github', label: 'GitHub', url: 'https://github.com/Weixianyun', color: '#0f172a' },
-  { key: 'bing', label: 'Bing', url: 'https://www.bing.com/', color: '#008373' },
-  { key: 'bilibili', label: 'Bilibili', url: 'https://space.bilibili.com/', color: '#fb7299' },
-  { key: 'youtube', label: 'YouTube', url: 'https://www.youtube.com/', color: '#ff0000' }
+  {
+    key: 'github',
+    label: 'GitHub',
+    url: 'https://github.com/Weixianyun',
+    color: '#0f172a'
+  },
+  {
+    key: 'bing',
+    label: 'Bing',
+    url: 'https://www.bing.com/',
+    color: '#008373'
+  },
+  {
+    key: 'bilibili',
+    label: 'Bilibili',
+    url: 'https://space.bilibili.com/',
+    color: '#fb7299'
+  },
+  {
+    key: 'youtube',
+    label: 'YouTube',
+    url: 'https://www.youtube.com/',
+    color: '#ff0000'
+  }
 ]
 
 export const NOTICES = {
-  light: { jp: '光の鷹は翔ぶ 白銀の翼、蒼き眼', zh: '光之鹰展翅翱翔 白银之翼，蔚蓝之瞳' },
-  dark: { jp: '闇の翼は降り る血と闇の彼方より', zh: '暗之翼降临 来自血与暗之彼方。' }
+  light: {
+    jp: '光の鷹は翔ぶ 白銀の翼、蒼き眼',
+    zh: '光之鹰展翅翱翔 白银之翼，蔚蓝之瞳'
+  },
+  dark: {
+    jp: '闇の翼は降り る血と闇の彼方より',
+    zh: '暗之翼降临 来自血与暗之彼方。'
+  }
 }
 
-export const SKILLS = ['软件设计','应用开发','插件开发','艺术创作','前沿科技']
+export const SKILLS = [
+  '软件设计',
+  '应用开发',
+  '插件开发',
+  '艺术创作',
+  '前沿科技'
+]
 
 export const TAGS = [
   { name: 'Vue', count: 9, color: '#42b883' },
@@ -54,6 +101,852 @@ export const TECH_STACK = [
   { name: 'WebGL', color: '#990000', icon: 'webgl' }
 ]
 
-export const PROJECTS = []
+// 示例数据（可空 — 留接口便于以后接入）
+export const PROJECTS = [
+  // {
+  //   id: 1,
+  //   title: '示例项目',
+  //   desc: '项目描述',
+  //   cover: '',
+  //   tags: ['Vue', 'TS'],
+  //   url: '#'
+  // }
+]
 
-PLACEHOLDER_ARTICLES
+export const ARTICLES = [
+  {
+    id: 1,
+    title: 'ToolJet：开源低代码平台，把内部工具开发效率拉满 10 倍',
+    date: '2026-08-16',
+    excerpt: 'ToolJet 是一款开源的企业级低代码 / AI 应用生成平台，React 18 + NestJS 全栈 TS，50+ 数据源直连，内置 LLM Agent 节点。本文从技术栈、核心功能、与同类项目对比、独立开发者变现路径等维度展开。',
+    tags: ['低代码', 'TypeScript', 'React'],
+    words: 1180,
+    sourceFile: 'src/data/posts/2026-08-16-tooljet.md',
+    repoUrl: 'https://github.com/ToolJet/ToolJet',
+    content: `# ToolJet：开源低代码平台，把内部工具开发效率拉满 10 倍
+
+ToolJet 是一款开源的企业级低代码 / AI 应用生成平台，让你像搭积木一样快速构建内部工具、运营后台、数据仪表盘、业务工作流甚至 AI Agent，而无需从零造前端。
+
+## 一句话定位
+
+拖拽式 UI 编辑器 + 多数据源直连 + 插件化业务逻辑 + 原生 AI Agent 能力。它是当前开源生态里，唯一同时满足"开源 + 原生 AI + 沙箱安全 + 中文友好"四要素的低代码平台。
+
+## 技术栈
+
+- 前端：React 18 + TypeScript + Tailwind + dnd-kit
+- 后端：NestJS（Node.js + TypeScript）
+- 数据库：Postgres / MySQL / MongoDB / MSSQL / MariaDB
+- 插件体系：Node.js 子进程沙箱，每个插件独立运行，故障隔离
+- AI 能力：内置 LLM 节点，支持 OpenAI / Anthropic / 自托管模型
+- 许可：AGPL-3.0，社区版可商用，保留版权与网络服务条款即可
+
+## 核心功能
+
+**可视化拖拽式 UI 编辑器** 内置 40+ 组件（表格、表单、图表、地图、富文本等），画布所见即所得。
+
+**多数据源直连** 支持 Postgres、MySQL、MongoDB、Redis、REST API、GraphQL、gRPC、S3、Stripe、Notion、Airtable 等 50+ 数据源，零胶水代码。
+
+**插件化业务逻辑** 在 JS / Python 沙箱里写插件，处理数据转换、签名校验、API 编排。
+
+**AI Agent 原生支持** 内置 LLM 节点 + Tool Calling，搭一个对话式查数据库的应用只需 10 分钟。
+
+**自托管一键部署** Docker / Kubernetes / DigitalOcean / AWS AMI，30 分钟跑起来。
+
+## 对比 Appsmith 与 Retool
+
+| 维度 | ToolJet | Appsmith | Retool |
+|---|---|---|---|
+| 开源 | AGPL | AGPL | 闭源 + 自托管收费 |
+| AI Agent | 原生支持 | 需自接 | 需自接 |
+| 插件沙箱 | Node 子进程隔离 | 同进程 | 闭源 |
+| 多租户 RBAC | 完善 | 较薄 | 完善 |
+| 中文文档 | 官方译文 | 社区翻译 | 无 |
+| 上手成本 | 中 | 较低 | 中 |
+
+差异化看点在于，技术栈前后端统一用 TypeScript，对前端开发者特别友好；插件沙箱机制让二次开发的空间几乎无限。
+
+## 客观短板
+
+- AGPL 协议：对外提供 SaaS 必须开源，对纯自用或内网部署无影响。
+- 学习曲线比 Appsmith 略陡：插件沙箱 + 多数据源模型需要花 1-2 天理解。
+- 生态成熟度仍弱于 Retool：第三方组件和模板数量有差距。
+- 国内访问偶有不稳：CDN 节点问题，自托管可解。
+- 重型场景需自建性能监控：高并发下需要单独调优。
+
+## 适合谁，不适合谁
+
+适合：中小团队要快速搭内部工具或数据看板；独立开发者做 SaaS 原型 MVP；运维 / 数据 / 运营团队的提效工具；想用 AI Agent 改造企业流程的探索者。
+
+不适合：强 ToC 复杂前端应用；必须用非 AGPL 协议的商业产品；追求极致性能的高频交易系统。
+
+## 普通开发者能学到什么
+
+- NestJS 模块化架构：一个中型企业级项目的工程范本
+- 可视化编辑器实现：拖拽、撤销、重做、JSON Schema 驱动 UI
+- 沙箱安全模型：子进程隔离 + 双向 IPC + 资源限制
+- Postgres 高级特性：行级安全、视图、物化视图
+- 插件化设计哲学：核心与扩展的边界划分
+
+## 独立开发者价值
+
+上手成本低，会 React 加一点 SQL，一周就能做出内部工具 MVP。二次开发空间大，插件机制加自定义组件几乎可以无限扩展。
+
+变现路径有三条：一是给中小企业做内部工具定制外包，按项目收费 5-20 万；二是自托管 SaaS，保留版权加提供运维，做成订阅制；三是搭好 AI Agent 应用模板卖模板，做 AI Agent 应用商店。合规上，自部署版避开 AGPL 网络条款，最适合国内私有化场景。
+
+## 中文友好度
+
+官方文档中文翻译完成度 80% 以上。中文社区活跃，微信群和飞书群 2000+ 开发者。Issue 中英文均响应，平均 24 小时内。国内多家厂商基于 ToolJet 做二次发行。
+
+## 总结
+
+ToolJet 不是一个玩具级低代码，它是一个真正可以撑起中型企业内部工具链的生产级框架。如果你有内部工具重复造轮子的痛，强烈建议花一周试试。
+
+GitHub: https://github.com/ToolJet/ToolJet`
+  },
+  {
+    id: 2,
+    title: '深入理解 AI Agent：把 LLM 装上双手，10 章吃透工程',
+    date: '2026-08-17',
+    excerpt: 'bojieli/ai-agent-book 是李博杰主笔的中文 AI Agent 教材，10 章 + 95 个 uv 锁定实验，覆盖上下文工程、MCP 工具、Coding Agent、评估、SFT/RL 与多 Agent 协作，正文、PDF、代码全部 Apache-2.0 开源。本文从技术栈、对比、独立开发者变现角度深度测评。',
+    tags: ['AI Agent', 'Python', '随笔'],
+    words: 1443,
+    sourceFile: 'src/data/posts/2026-08-17-ai-agent-book.md',
+    repoUrl: 'https://github.com/bojieli/ai-agent-book',
+    content: `# 深入理解 AI Agent：把 LLM 装上双手，10 章吃透 Agent 工程
+
+当所有人都在堆 Agent Demo 时，李博杰（bojieli）把 10 章、95 个实验、13 种语言写成一本完全开源的工程书，把「Agent = LLM + 上下文 + 工具」这个公式从原理讲到生产。
+
+## 一句话定位
+
+它是当前 GitHub 上少有的、系统覆盖「上下文工程 / MCP 工具 / Coding Agent / 评估 / 后训练 / 多 Agent 协作」六大主题的中文 AI Agent 教材；正文、配图、代码、PDF 全部 Apache-2.0 开源，且配套实验可一键 uv 复现。
+
+## 技术栈
+
+- 语言：Python 3.11-3.13
+- 依赖管理：uv（提交 uv.lock，可锁定复现）
+- 文档工具链：pandoc + xelatex + ElegantBook（LaTeX 文档类）
+- 评测与训练：verl、TRL、Unsloth、vLLM、LiteLLM、Ollama、Playwright
+- 协议：MCP、Claude API、OpenAI 兼容、国产 Kimi / GLM / DeepSeek / Qwen
+- 许可：Apache-2.0，可商用、可改、可闭源分发
+
+## 核心功能
+
+**Agent 基础知识（Ch.1）** 给出 Agent 三件套的最小心智模型，并指出 Harness 工程才是真正的护城河。
+
+**上下文工程（Ch.2）** 系统讲 KV Cache、提示工程、Agent Skills、上下文压缩，把「上下文决定能力上限」落到可复现的实验。
+
+**用户记忆与知识库（Ch.3）** 覆盖跨会话记忆、RAG、结构化索引、知识图谱，给出在 LLM 上做长期记忆的工程范式。
+
+**工具与 MCP（Ch.4）** 拆解感知 / 执行 / 协作三类工具，引入事件驱动异步 Agent 与主动工具发现，紧贴 2026 年 MCP 协议落地节奏。
+
+**Coding Agent 与评估（Ch.5/Ch.7）** 13 个实验铺出生产级 Coding Agent 全景，并给出评测环境、指标、统计显著性方法。
+
+**后训练与持续进化（Ch.8/Ch.9）** 拆解 SFT / RL 何时选、工具调用如何内化、Agent 如何从运行轨迹自我迭代。
+
+**多 Agent 协作（Ch.10）** 给出协作框架、上下文共享与隔离策略，并配套 TalkAct 与斯坦福生成式 Agent 复现。
+
+## 对比 shareAI-lab/learn-claude-code 与 Lilian Weng 博客
+
+| 维度 | 本项目 | shareAI-lab/learn-claude-code | Lilian Weng 博客 ||---|---|---|---|
+| 开源 | Apache-2.0，正文+代码全开 | 仅代码，缺系统文档 | 仅博客，无实验 |
+| AI 支持 | 通用 Agent 六主题全覆盖 | 聚焦 Claude Code 子集 | 综述型，无代码 |
+| 配套实验 | 95 个 uv 锁定 | 单仓小型 demo | 0 |
+| 多语言 | 13 种（含中英西俄日韩） | 中英为主 | 英文 |
+| 系统性 | 教材级、10 章递进 | 工程笔记 | 单篇长文 |
+| 中文友好 | 原生中文 + 繁中 | 中文注释 | 翻译滞后 |
+
+差异化在于：把综述类长文升级为「可复现的教材」，并以 uv.lock 锁版本；多语言译本对国内独立开发者最直接可用。
+
+## 客观短板
+
+- 章节深度不均：Ch.8 后训练偏重实验演示，模型对齐理论只点到为止。
+- 配套实验需 GPU：第 8 章 SFT/RL 实验必须本地有 CUDA 环境，纯 CPU 跑不动。
+- 知识更新慢于主线：13 种语言译本同步靠社区，英文版偶有滞后。
+- 不提供 SaaS：只给源码与 PDF，没有托管 Playground。
+- 印刷版缺失：仅 PDF / EPUB / 在线阅读，无纸书渠道。
+
+## 适合谁，不适合谁
+
+适合：要把 LLM 真正落到生产系统的独立开发者；想从零搭 Agent 的全栈工程师；做 AI Agent 培训与教学的讲师；正在评估 Agent 选型与自研路径的架构师；研究生阶段想补 Agent 工程实践的高年级学生。
+
+不适合：只想 5 分钟跑通 Demo 的纯应用层用户；没有 Python 基础、只想看科普结论的非技术读者；要求完整印刷版的传统出版读者。
+
+## 普通开发者能学到什么
+
+- LLM 推理时 KV Cache 的工作机制与提示工程代价
+- 用 MCP 协议把工具抽象为可发现的服务
+- 上下文压缩与摘要策略在长任务里的工程取舍
+- 评测驱动的 Agent 选型与统计显著性检验
+- 简单 RL 配方在工具调用任务上的样本效率边界
+
+## 独立开发者价值
+
+上手成本低，会 Python 加 LLM 基础调用就能跑 Ch.1-4 的全部实验，Ch.5-7 跟着 uv 同步即可，Ch.8-10 视硬件选做。
+
+二次开发空间很大，正文是 Markdown，代码是 uv 锁定包，改一段就能 fork 出自己的内部培训材料；甚至可以直接接 LLM API 改写为「公司内部的 Agent 工程手册」。
+
+变现路径有三条：一是把 10 章拆成公众号 / 知乎 / B 站付费专栏，单价 99-299 元；二是基于配套实验做线下 AI Agent 训练营，1-2 天课程定价 1500-3000 元；三是把第 6 章 Computer Use 改造为「门店巡检 / 报表生成」垂直 SaaS，按月订阅 99-499 元。
+
+合规友好度极高，Apache-2.0 允许商用、修改、闭源再分发，仅需保留版权声明，对国内独立开发者做商业产品零法律摩擦。
+
+## 中文友好度
+
+- 文档：中文为原版，繁中、英文、西班牙、俄、日、韩等 13 种语言已上线
+- 社区：作者长期在 GitHub Issue、知乎、即刻与读者互动，PR 接受勘误
+- 响应：Issue 平均 1-3 天首次回复，作者本人高频维护
+- 访问：仓库、PDF、EPUB、在线阅读站点全程可直连 GitHub，国内访问稳定
+
+## 总结
+
+《深入理解 AI Agent》不是又一本「用 ChatGPT 写个客服」的速成读物，它把 Harness、上下文、MCP、评估、SFT/RL、多 Agent 这些工程关键词压进 10 章、95 个实验。
+
+如果你准备做 Agent 相关产品或系统升级，这一本可以顶过去三本英文综述的工程量。
+
+GitHub: https://github.com/bojieli/ai-agent-book`
+  },
+  {
+    id: 3,
+    title: 'n8n：把 AI Agent 装进画布的开源工作流引擎',
+    date: '2026-08-17',
+    excerpt: 'n8n 是面向工程师的可视化工作流与 AI Agent 编排平台，1500+ 集成、LangChain 节点、MCP Client/Server 双栈、Vue 3 + TypeScript 全栈。本文从技术栈、核心功能、与 Zapier / Make / Activepieces 对比、独立开发者二次封装路径展开。',
+    tags: ['AI Agent', 'Vue', 'TypeScript'],
+    words: 1420,
+    sourceFile: 'src/data/posts/2026-08-17-n8n.md',
+    repoUrl: 'https://github.com/n8n-io/n8n',
+    content: `# n8n：把 AI Agent 装进画布的开源工作流引擎
+
+当所有人都在卷 LLM API 调用的代码量时，n8n 已经在 GitHub 上成为连接 AI 与企业既有系统的「事实级」自动化底座，并在最新 2.34 系列里把 AI Agent 直接搬进了可视化画布。
+
+## 一句话定位
+
+它是面向工程师的可视化工作流引擎，把 1500+ 集成、AI Agent 节点、HTTP / 代码节点同框编排，既能 npx 跑本地也能 Docker / Kubernetes 自托管，从原型到生产一条链路走完。
+
+## 技术栈
+
+- 前端：Vue 3 + TypeScript + Vite + Pinia
+- 后端：Node.js 20 LTS + TypeScript + Express
+- 队列：BullMQ（Redis 后端）
+- 数据库：PostgreSQL 13+（生产推荐）/ SQLite（demo）
+- AI：原生 OpenAI、Anthropic、Google Gemini、Ollama 节点 + LangChain 模板
+- 协议：MCP Client / Server、REST、Webhook
+- 许可：Sustainable Use License（自托管可商用，托管 SaaS 受限）
+
+## 核心功能
+
+**可视化画布 + 1500+ 集成** 拖拽节点连边即可搭流程，节点覆盖 Slack、Notion、Salesforce、Postgres、Hugging Face 等 1500+ 系统。
+
+**AI Agent 原生支持** LangChain 节点、AI Tool、记忆、MCP Server 一应俱全，配合 OpenAI / Anthropic / Ollama 任意切换模型。
+
+**JavaScript / Python 代码节点** 任意节点可内嵌代码片段，可直接 import npm 包，对程序员友好。
+
+**Sub-workflow 与 Human-in-the-loop** 子流程可复用、暂停 / 恢复 / 审批节点支持，把流程拆到粒度合适。
+
+**企业级观测与权限** 执行历史、调试器、审计日志、RBAC、SSO / SAML、变量加密，AI 流程有完整可追溯性。
+
+**npx 起步 / Docker 自托管** 一行 npx n8n 起 demo，docker run 起生产，企业版支持 Kubernetes 与多实例。
+
+## 对比 Zapier、Make 与 Activepieces
+
+| 维度 | n8n | Zapier | Make | Activepieces |
+|---|---|---|---|---|
+| 开源 | Sustainable Use（可自托管） | 闭源 | 闭源 | MIT |
+| AI Agent | 原生 LangChain 节点 + MCP | 需 OpenAI 插件 | 原生 AI 节点 | 原生 AI + MCP |
+| 集成数量 | 1500+ | 7000+ | 1500+ | 500+ |
+| 节点代码 | JS / Python + npm import | 仅简单 JS | 仅简单 JS | TS / npm import |
+| 多租户 RBAC | 完善 | 完善 | 完善 | 中等 |
+| 中文文档 | 社区翻译活跃 | 完整 | 完整 | 一般 |
+| 上手成本 | 中 | 低 | 中 | 中 |
+
+差异化在于「可自托管 + 可写代码 + AI 原生 + MCP 双向」的组合，让它在 ToB 工程团队里替代 Zapier 的同时承担 AI Agent 编排层的职责。
+
+## 客观短板
+
+- 协议为 Sustainable Use License：直接用 n8n 提供对外托管 SaaS 受限，企业级 SaaS 需谈商业授权。
+- 内置 AI 节点偏 LangChain 视角：要做复杂 Agent 拓扑仍需自写 Python 节点。
+- 自托管需要运维 Redis + Postgres + 队列监控，单机故障需自行兜底。
+- 高频任务（>1000 exec/min）需多实例 + 队列调优，文档相对零散。
+- 节点生态虽然 1500+，但部分国产 SaaS（飞书、钉钉深度集成）仍依赖社区节点。
+- 调试器虽强，但复杂分支排错仍要靠执行历史，门槛高于纯代码。
+
+## 适合谁，不适合谁
+
+适合：要把 AI 能力塞进企业既有 SaaS 链路的全栈 / 后端工程师；自托管偏好强的中型团队技术中台；做 AI Agent PoC 又不想写胶水代码的产品 / 解决方案架构师；运维、数据、内容运营团队的提效工具建设者；想用 MCP 把外部工具接给 Claude / Cursor / 自研 Agent 的 AI 工程师。
+
+不适合：纯运营 / 行政的非技术用户（Power Automate / Zapier 更轻）；以消费级高并发出号为商业模式（直接用 Temporal / 自研更划算）；强 ToC 前端交互产品（画布偏向工具链，不是面向终端用户的 UI）；需要 7×24 商业 SLA 又不愿付费企业版的关键业务。
+
+## 普通开发者能学到什么
+
+- 可视化编辑器的状态机建模：节点 / 连边 / 数据流的 JSON Schema 表达
+- 队列驱动的异步执行模型：BullMQ + Redis 在长任务场景的标准用法
+- AI Agent 与外部工具的协议抽象：MCP Client / Server 设计
+- TypeScript 单体仓的多包管理：前后端共享类型、构建、测试的工程范本
+- 节点即包：每个集成是独立 npm 包，动态加载、热更新、版本隔离
+- 表达式引擎与表达式沙箱：可视化场景下 $json / $now 等上下文的安全求值
+
+## 独立开发者价值
+
+上手成本中等，会 JavaScript + 一点 API 概念，一周可以搭出 MVP。两点显著优势：第一，1500+ 集成大幅减少对接多家 SaaS 的胶水代码，独立开发者一个人就能撑起一个 SaaS 业务的中后台；第二，AI Agent + MCP 双向支持，意味着可以基于 n8n 包一层「行业 AI 自动化模板」做垂直 SaaS，比如电商选品自动化、本地服务线索清洗等。
+
+二次开发空间大，节点可自定义、表达式可扩展、UI 主题可改，可以做出完全属于自己品牌的自动化产品。
+
+变现路径有三条：一是做行业自动化模板售卖，单套 200-2000 元，复购率高于纯课程；二是给中小企业做集成实施外包，按流程节点数报价 3-15 万；三是自托管版套一层品牌做 SaaS 订阅，月费 99-999 元。
+
+合规上，自托管 + 自用 + 不直接对外转售 n8n 本身属于协议允许范围；做实施服务、模板销售、二次封装产品都可走通，只要不直接与官方 n8n Cloud 抢同质市场。
+
+## 中文友好度
+
+- 文档：官方中文翻译覆盖核心模块，AI、表达式、MCP 章节有专门中文入口
+- 社区：国内用户论坛、飞书 / 微信群数千人，腾讯云、阿里云、华为云均有镜像
+- Issue：中英文均响应，企业版工单 1 工作日内，社区 Issue 1-3 天
+- 访问：GitHub 仓库、官方文档、模板站国内均可直连，npx 与 Docker 镜像国内拉取稳定
+
+## 总结
+
+n8n 不是又一个 Zapier 平替，它把可视化工作流、AI Agent、可写代码、自托管这四件事压进了同一张画布。
+
+如果你正面对「AI 能力如何嵌入企业既有系统」这个问题，n8n 值得花一个周末跑一遍 demo，而不是从零造一个调度器。
+
+GitHub: https://github.com/n8n-io/n8n`
+  },
+  {
+    id: 4,
+    title: 'Firecrawl：把整个 Web 变成 LLM 可读上下文的开源引擎',
+    date: '2026-08-25',
+    excerpt: 'Firecrawl 是 GitHub 上 star 增速最快的 Web 上下文 API，Scrape / Crawl / Search / Map / Interact / Agent 七大端点，9 套官方 SDK、MCP Server 与 Skills 一应俱全，把整张互联网变成 LLM 可直接调用的数据底座。本文从技术栈、对比、独立开发者变现路径等维度深度测评。',
+    tags: ['TypeScript', 'AI Agent'],
+    words: 1420,
+    sourceFile: 'src/data/posts/2026-08-25-firecrawl.md',
+    repoUrl: 'https://github.com/firecrawl/firecrawl',
+    content: `# Firecrawl：把整个 Web 变成 LLM 可读上下文的开源引擎
+
+当所有人都在讨论 RAG 和 Agent 时，真正卡脖子的其实是「数据源」。Firecrawl 把搜索、抓取、整站爬取、结构化提取、AI 操作网页这五件事压进同一套 API，再配齐 9 套官方 SDK、MCP Server、Agent Skill 和 CLI，让 LLM 可以像调用数据库一样调用整张互联网。
+
+## 一句话定位
+
+它是当前 GitHub 上 star 增速最快的「Web 上下文 API」开源项目，定位是给 AI Agent 与 RAG 系统提供一站式网页数据底座，从 URL 到 Markdown / JSON / 结构化数据，免去自建抓取、代理、渲染、反爬这一整套工程。
+
+## 技术栈
+
+- 前端 / API：Node.js 20+ + TypeScript + Express + Zod
+- 抓取引擎：Playwright + Chromium（自研 fire-engine）+ Headless Chrome 集群
+- 队列：BullMQ + Redis，处理 Crawl / Batch Scrape 等长任务
+- 数据库：Postgres + Redis（生产），SQLite（自托管 demo）
+- 代理：自研代理池（自托管可对接 SPuR / Oxylabs / Bright Data）
+- AI 能力：内置 LLM 提取（GPT / Claude / 自托管模型）+ Agent 节点 + PII 自动脱敏
+- 多语言 SDK：Python、Node.js、Go、Java、Rust、Ruby、Elixir、PHP、.NET 全官方覆盖
+- 集成：MCP Server、Firecrawl Skills Catalog、CLI、Lovable / Zapier / n8n 平台节点
+- 许可：核心 AGPL-3.0，9 套 SDK 与 Skills 目录 MIT
+
+## 核心功能
+
+**Scrape 单页抓取** 单 URL 转 Markdown / HTML / 结构化 JSON / 截图，支持 JS 渲染与 PII 脱敏，P95 延迟约 3.4 秒。
+
+**Crawl 整站爬取** 一次请求把整个网站拉成 Markdown，自动限速、失败重试、断点续传，结果按页面返回。
+
+**Search + Map** 关键词搜索直接返回正文，Map 端点秒级列出整站 URL 清单，搭配可对子集做精确爬取。
+
+**Interact 浏览器交互** 抓取后用自然语言驱动点击 / 滚动 / 输入 / 等待，再拿结构化结果，对单页应用天然友好。
+
+**Agent 端点** 不给 URL 也能拿数据：只描述「我想要什么」，由 spark-1-mini / spark-1-pro 自主搜索、浏览、抽取，Pydantic Schema 直接落结构化 JSON。
+
+**Skills 与 MCP** 一行 npx skills add firecrawl/skills 接入 Claude Code / Cursor / OpenCode，Claude / MCP 客户端可直接 firecrawl-mcp 拉数据。
+
+## 对比 Scrapy、Apify 与 Tavily
+
+| 维度 | Firecrawl | Scrapy | Apify | Tavily |
+|---|---|---|---|---|
+| 开源 | AGPL-3.0 核心 | BSD | 闭源 + 自托管收费 | 闭源 SaaS |
+| JS 渲染 | 内置 | 需 Splash / Playwright 中间件 | 需配置 | 仅服务端渲染 |
+| AI 输出 | Markdown / JSON / 摘要 | 纯 HTML | 需自接 LLM | 摘要级 |
+| 多语言 SDK | 9 套官方 | Python 为主 | 通用 API | Python / JS |
+| 协议 | MCP + Skills | 无 | MCP | MCP |
+| 中文文档 | 官方译文 | 完整 | 一般 | 较薄 |
+| 上手成本 | 低 | 中 | 中 | 低 |
+
+差异化在于：把「抓取 + 渲染 + 代理 + 结构化 + AI 提取」做成端到端 API，省掉自研工程里最脏最累的部分；同时用 MCP 和 Skills 协议主动适配 Agent 生态，不是被动等用户接入。
+
+## 客观短板
+
+- 协议为 AGPL-3.0：直接用 Firecrawl 提供对外 SaaS 必须开源，自托管内部用无影响。
+- 自托管需要 Chromium 集群 + Redis + Postgres + 代理池，运维成本不低。
+- 部分高阶能力（Agent 节点、Research Index、自动 PII 脱敏）需要云端 Key，自托管版能力有差距。
+- 9 套 SDK 偶有同步滞后，Issue #4393 等就指出新选项未及时进入 SDK 强类型面。
+- 对 robots.txt 严格遵守，合规抓取是设计前提，灰黑产场景不适用。
+- 单次 Crawl 上限受套餐约束，超大站点需自建分片策略。
+
+## 适合谁，不适合谁
+
+适合：要做 RAG / 知识库的 AI 工程师；要把网页数据喂给 LLM 的 Agent 开发者；做电商比价、舆情监控、SEO 审计、学术调研的独立开发者；需要 PDF / DOCX 解析入库的 ETL 团队；正在评估 Scrape 工具栈的技术负责人。
+
+不适合：要完全自研可控底层、不接受 AGPL 协议的中大型 SaaS；以网络爬虫灰色业务为商业模式的团队；纯离线桌面端单机用户；只需一次性抓几十个页面的低频脚本场景。
+
+## 普通开发者能学到什么
+
+- 大规模抓取系统的工程化：代理池、指纹轮换、限速、失败重试的工业级实现
+- LLM 友好输出设计：Markdown 清洗、JSON Schema 驱动结构化、token 预算控制
+- Monorepo + 多语言 SDK 同步发布：pnpm workspace + 自动 bump + CI 校验
+- MCP 与 Skills 协议落地：把能力包装成 Agent 可发现的服务
+- PDF 解析管线：pageMarkers、pages、blocks 三个维度的取舍与缓存变体
+- 自托管产品的 license 双轨：核心 AGPL + 周边 MIT 的合规分界线
+
+## 独立开发者价值
+
+上手成本低，会 JavaScript 或 Python 半小时就能跑通 Scrape / Crawl 第一条数据流。二次开发空间大，自托管版允许接入私有代理、自定义 LLM、改造提取模板，可以做行业垂直抓取工具，例如律师案件库、跨境电商竞品监控、研报聚合。
+
+变现路径有三条：一是套一层 UI 做细分领域 SaaS，例如「学术论文聚合 / 行业报告订阅」，按月收费 99-499 元；二是给中小企业做一次性数据采集外包，按百万 Token / 千万 Token 计费；三是把 Skills 与 MCP 打包卖给 Agent 平台，做 Agent 工具商店的供需两侧。
+
+合规友好度上，AGPL 适用于自托管内部用与改造分发；要做对外 SaaS 必须开源或走 Firecrawl 云按量计费，开发者按能力分两条腿走，对国内独立开发者做内部工具零法律摩擦，做 SaaS 则有明确边界。
+
+## 中文友好度
+
+- 文档：官方中文翻译覆盖核心模块，Quick Start、API Reference、Agent、Skills 章节都有中文入口
+- 社区：Discord 万人社区，国内有「Firecrawl 中文交流」微信 / 飞书群数十个
+- Issue：中英文均响应，平均 1-3 天首次回复，PR 接受中文描述
+- 访问：GitHub 仓库、文档站、CLI / Skills 直连国内均稳定，API 端点对国内 IP 偶有限速但配代理可解
+
+## 总结
+
+Firecrawl 不是又一个 Scrapy 套壳，它把抓取、AI 提取、Agent 操作、协议适配做成一条龙，是 2026 年做 Web 上下文产品绕不开的底座。
+
+如果你正面对「LLM 怎么吃到全网数据」这个问题，强烈建议先花一个晚上跑通 v2 文档里的 Agent 端点，再决定要不要自研。
+
+GitHub: https://github.com/firecrawl/firecrawl`
+  }
+  ,
+  {
+    id: 5,
+    title: 'chrome-devtools-mcp：浏览器给 AI 操控',
+    date: '2026-09-01',
+    excerpt: 'chrome-devtools-mcp 是 Google Chrome 团队官方维护的开源 MCP 服务器，把 Puppeteer 与 Chrome DevTools Protocol 完整能力暴露为 57 个标准化工具，覆盖浏览器自动化、性能分析、Heap Snapshot、扩展与 PWA 调试。本文从技术栈、对比、独立开发者变现路径等维度展开。',
+    tags: ['TypeScript', 'AI Agent'],
+    words: 1413,
+    sourceFile: 'src/data/posts/2026-09-01-chrome-devtools-mcp.md',
+    repoUrl: 'https://github.com/ChromeDevTools/chrome-devtools-mcp',
+    content: `# chrome-devtools-mcp：浏览器给 AI 操控
+
+当 Cursor、Claude Code、Gemini CLI 这些 AI 编码助手开始能「看懂」浏览器时，背后真正把 Chrome DevTools 协议翻译成 MCP 工具的，是 Google Chrome 团队官方维护的 chrome-devtools-mcp。它把 57 个工具整齐摆到任何 MCP 客户端面前，把浏览器从「截图工具」升级为 Agent 可编程的运行时。
+
+## 一句话定位
+
+它是一个开源的 Model-Context-Protocol 服务器，把 Puppeteer + Chrome DevTools Protocol 能力暴露为标准化工具，让 AI 编码助手无需自研就能完成浏览器自动化、调试、性能分析。
+
+## 技术栈
+
+- 前端：纯 TypeScript（ESM 单体库），TypeScript 6.0 + Rollup 4 构建
+- 浏览器自动化：Puppeteer 25.x + Chrome DevTools Protocol（CDP）+ Lighthouse 13
+- MCP 实现：@modelcontextprotocol/sdk 1.30，stdio 传输
+- 沙箱：Chrome for Testing 隔离实例，支持自定义 userDataDir 与 channel
+- 部署：npm 一行安装，npx -y chrome-devtools-mcp@latest 启动
+- 许可：Apache-2.0，可商用、可修改、可闭源再分发
+
+## 核心功能
+
+**输入自动化（10 个工具）** click、drag、fill、fill_form、hover、press_key、type_text、upload_file、handle_dialog、click_at，覆盖真实用户所有交互路径，fill_form 是批量填表的提速关键。
+
+**导航与会话管理（6 个工具）** new_page、list_pages、navigate_page、close_page、select_page、wait_for，把多 Tab 工作流变成 Agent 可显式控制的资源。
+
+**调试工具（8 个工具）** evaluate_script、take_snapshot、take_screenshot、list_console_messages、get_console_message、lighthouse_audit、screencast_start、screencast_stop，从「读 DOM」到「看 Lighthouse 报告」一条链路走完。
+
+**性能分析（3 个工具）** performance_start_trace、performance_stop_trace、performance_analyze_insight，把 Chrome DevTools Performance 面板的 trace 转换为结构化洞察，配合 CrUX 现场数据给出真机视角的优化建议。
+
+**网络与内存（2 + 13 个工具）** 网络层可列举请求并下钻详情；内存层提供完整 Heap Snapshot 查询 API，覆盖对象保留路径、支配树、重复字符串、对比快照，是排查内存泄漏的生产级工具。
+
+**扩展与 PWA（5 + 4 个工具）** 直接驱动 Chrome 扩展与渐进式 Web 应用的安装、卸载、启动、状态查询，是扩展开发者做 e2e 测试的稀缺能力。
+
+## 对比 Playwright MCP 与 Browser-Use
+
+| 维度 | chrome-devtools-mcp | Playwright MCP | Browser-Use |
+|---|---|---|---|
+| 维护方 | Google Chrome 团队官方 | Microsoft Playwright 团队 | 社区 |
+| 底层引擎 | Puppeteer + CDP | Playwright（自研多浏览器） | Playwright + LLM 决策 |
+| 浏览器支持 | Chrome / Chrome for Testing | Chromium / Firefox / WebKit | Chromium 系 |
+| 调试深度 | 57 工具含 Heap、Performance、Lighthouse | 通用自动化为主，调试工具较薄 | 高层封装，工具粒度粗 |
+| 协议暴露 | 直接调 CDP，几乎无限 | 跨浏览器抽象，能力被收敛 | 由 LLM 选下一步 |
+| 多租户 / RBAC | 由宿主页提供 | 由宿主页提供 | 闭源 SaaS 提供 |
+| 中文文档 | 英文 README，社区翻译进行中 | 完整 | 一般 |
+| 上手成本 | 极低 | 低 | 中 |
+
+差异化在于，chrome-devtools-mcp 选择「把 Chrome DevTools 完整暴露出来」而不是「给 LLM 套一层高级封装」，让性能调优、内存分析、Lighthouse 审计这些真实生产场景成为 MCP 工具的一等公民。
+
+## 客观短板
+
+- 仅支持 Chrome 与 Chrome for Testing，Firefox / Safari 用户需另寻 Playwright MCP。
+- 默认开启 Google 使用统计与 CrUX 网络请求，隐私敏感场景必须显式传 --no-usage-statistics 与 --no-performance-crux。
+- 多 Tab / 多用户配置文件下偶现 puppeteer_dev_chrome_profile 进程残留，issue #2621 已记录，需手动清理。
+- 工具数已达 57 个，对模型上下文窗口压力较大，slim 工具较薄暴露约 20 个核心工具。
+- 长生命周期服务器在客户端断开后仍持有活跃页面，issue #2599 已上报。
+- 部分高级能力如 take_heapsnapshot 需要 --memoryDebugging 启动参数，初次配置容易遗漏。
+
+## 适合谁，不适合谁
+
+适合：要把 AI 编码助手接入真实浏览器做端到端验证的全栈工程师；做性能调优与内存泄漏排查的前端架构师；Chrome 扩展与 PWA 开发者与测试工程师；想用 Agent 自动化跑 Lighthouse 的可观测性建设者；做浏览器自动化测试平台的基础设施团队。
+
+不适合：必须跨浏览器兼容的纯 e2e 测试场景（直接选 Playwright）；对 Google 数据收集零容忍的强隐私合规环境；只需做一次性截图的轻量用户（用 Puppeteer 脚本更直接）；MCP 客户端尚未稳定的纯研究项目。
+
+## 普通开发者能学到什么
+
+- MCP 服务器的工程范式：57 个工具的 schema 设计、参数命名、错误处理一致性
+- TypeScript ESM 单体库 + Rollup 打包的现代 Node 库构建范式
+- Chrome DevTools Protocol 域划分：DOM、Network、HeapProfiler、Tracing、Extensions 的能力边界
+- Puppeteer 与 CDP 的双层抽象：高层 API 与底层协议如何配合
+- 隐私合规的可配置化设计：用 flag 与环境变量把数据开关做到 zero-friction
+- 多进程隔离与资源清理：userDataDir 复用、进程残留检测与关闭路径
+
+## 独立开发者价值
+
+上手成本极低，任何 MCP 客户端一行配置即可启用，npx -y chrome-devtools-mcp@latest 启动，npm install 不需要。
+
+二次开发空间足够，Apache-2.0 协议下的 TypeScript 库，可直接 fork 增删工具，也可作为 SDK 嵌入自研 MCP 网关做权限与审计层；57 个工具按需裁剪成 10 个垂直工具是常见模式。
+
+变现路径有三条：一是给企业前端团队做「AI 性能巡检 SaaS」，按项目计费 5-20 万；二是做 Chrome 扩展自动化测试云服务，按月订阅 99-499 元；三是把 Lighthouse 与 Performance Insight 包装成可订阅的性能监控中间件，面向中小 SaaS。
+
+合规友好度极高，Apache-2.0 允许商用、修改、闭源再分发，隐私开关通过 flag 控制，不担心品牌绑定或专利问题。
+
+## 中文友好度
+
+- 文档：英文 README 为主，中文社区翻译在演进中，API 引用以英文原版为准
+- 社区：Google Chrome Developers 中文社区、MCP 中文社群里都有专题讨论
+- 响应：Google 团队对 Issue 响应 1-3 天，社区 PR 接受率高
+- 访问：GitHub 仓库与 npm 包国内直连稳定，npx 拉取无障碍，仅 CrUX API 国内偶有限速
+
+## 总结
+
+chrome-devtools-mcp 不是又一个 Playwright 套壳，它是 Google 把自家 DevTools 协议以 MCP 形式开源出来的官方实现。
+
+如果你正面对「AI 怎么看见浏览器真实状态」这个问题，强烈建议把它接进现有的 MCP 客户端，比从零搭一个浏览器代理稳得多。
+
+GitHub: https://github.com/ChromeDevTools/chrome-devtools-mcp`
+  },
+  {
+    id: 6,
+    title: 'Dify：把 LLM 应用从原型到生产的开源一站式平台',
+    date: '2026-09-07',
+    excerpt: 'Dify 是当前 GitHub 上最成熟的 LLM 应用开发平台，以可视化画布统一编排 Workflow / Agent / RAG / 模型管理 / LLMOps，15 种语言官方文档，自带后端即服务 API。本文从技术栈、核心功能、与 n8n / Flowise 对比、独立开发者变现路径展开。',
+    tags: ['TypeScript', 'AI Agent'],
+    words: 1380,
+    sourceFile: 'src/data/posts/2026-09-07-dify.md',
+    repoUrl: 'https://github.com/langgenius/dify',
+    content: `# Dify：把 LLM 应用从原型到生产的开源一站式平台
+
+在 AI Agent 概念漫天飞的 2026 年，真正能让产品经理自己搭出 RAG 与工作流的，是 langgenius/dify 这类 LLM-native 可视化平台。它把 Workflow、RAG、Agent、模型管理、LLMOps 压进同一套后端即服务，让 AI 应用像搭积木一样从 demo 走到生产。
+
+## 一句话定位
+
+它是当前 GitHub 上最成熟的 LLM 应用开发平台，以可视化画布统一编排 Workflow / Agent / RAG / 模型 / 观测，对外提供 DB 后端即服务 API 与 15 种语言官方文档，把 LLM 应用底座做成了开箱即用的工程产品。
+
+## 技术栈
+
+- 前端：React 18 + TypeScript + Vite + Redux Toolkit
+- 后端 API：Python 3.11 + Flask + Gunicorn
+- 异步任务：Celery + Redis，处理文档解析与批处理
+- 数据库：PostgreSQL 13+（主存），Weaviate / Qdrant / Milvus / pgvector / Chroma（向量库可选）
+- 模型接入：覆盖 GPT、Claude、Gemini、Mistral、Llama 3、Qwen、DeepSeek、GLM、Kimi 等数百家方案，OpenAI 兼容协议可一键接入
+- 协议：REST、Streaming SSE、Function Calling、ReAct、Tool Calling
+- 许可：Dify Open Source License（基于 Apache 2.0 加附加条款，社区版可自托管商用）
+
+## 核心功能
+
+**可视化 Workflow 画布** 拖拽节点搭出分支、循环、并行、HTTP 节点、代码节点，所见即所得调试。
+
+**RAG Pipeline 一条龙** 文档摄入支持 PDF / PPT / Word / Excel / 网页 / Notion，文本提取、清洗、分块、向量化、检索、重排序全流程可配。
+
+**Agent 节点** 支持 Function Calling 与 ReAct，内置 Google Search、DALL·E、Stable Diffusion 等 50+ 工具，私有工具可注册为 OpenAPI 或 MCP。
+
+**Prompt IDE** 多模型对比、变量调试、对话历史标注，支持文本转语音扩展节点。
+
+**LLMOps 与观测** 与 Opik、Langfuse、Arize Phoenix 集成，生产日志、成本、延迟、命中指标实时可视化。
+
+**后端即服务** 所有能力暴露为 REST API，可直接嵌入业务系统。
+
+## 对比 n8n 与 Flowise
+
+| 维度 | Dify | n8n | Flowise |
+|---|---|---|---|
+| 开源 | Agent | Sustainable Use | Apache-2.0 |
+| AI 原生 | Workflow + Agent + RAG 三合一 | 通用工作流 + AI 节点 | Agent + RAG 为主 |
+| 模型支持 | 数百家推理 + 自托管 | 主要 OpenAI 兼容 | OpenAI 兼容 |
+| 工具数量 | 50+ 内置 + MCP | 1500+ 集成 | 自建为主 |
+| RAG 能力 | 一条龙 Pipeline | 需自建节点 | 基础 |
+| 多租户 RBAC | 完善 | 完善 | 较薄 |
+| 中文文档 | 官方完整 | 社区翻译 | 一般 |
+| 上手成本 | 中 | 中 | 低 |
+
+差异化在于，Dify 把 LLM 应用特有的 Workflow、Agent、RAG、模型、观测、API 做成一个产品概念，n8n 偏通用工作流，Flowise 偏 LangChain 复刻。Dify 是三者中唯一能独立支撑 LLM 应用从 demo 到生产完整链路的开源项目。
+
+## 客观短板
+
+- 协议为 Dify Open Source License：基于 Apache 2.0 加附加条件，多租户 SaaS 转售需细读边界，自托管内部用无障碍。
+- 复杂工作流调试以节点级日志为主，超长链路可观测性需配合 Langfuse 等外部工具。
+- 知识库大规模下（>百万 chunks）需替换默认检索后端为 Milvus 或 Weaviate，运维成本不低。
+- Workflow 编辑器并行节点超过 50 个时偶发性能问题，需拆分工作流。
+- 模型适配滞后于新发布模型，社区贡献 Provider PR 合并节奏不稳定。
+- 资源密集：官方推荐最低 2 核 4G，生产建议 8 核 16G 起。
+
+## 适合谁，不适合谁
+
+适合：要把 LLM 能力塞进企业既有系统的 AI 应用架构师；做 RAG、知识库、智能客服的产品与工程团队；想统一公司多模型调用与观测的 AI 中台建设者；正在评估自研 LLM 平台还是用开源的工程负责人。
+
+不适合：直接对外提供多租户 SaaS 且不愿接受附加条款的纯 ToC 创业者；只需单一 ChatBot 不需要工作流的极简场景；必须私有化部署但对 Go、Rust 性能有强诉求的极端低延迟系统。
+
+## 普通开发者能学到什么
+
+- LLM 应用的全栈工程范式：前端画布到后端异步队列、再到向量库的可插拔架构
+- Workflow 编辑器的状态机设计：节点、连边、上下文与变量作用域的 JSON Schema 表达
+- RAG 流水线工程化：文档解析、分块、Embedding、检索、重排序的可配置抽象
+- 多模型适配层模式：统一 Provider 接口下如何封装 OpenAI、Anthropic、自托管协议
+- LLMOps 设计原则：日志、成本、延迟、命中与人类反馈如何沉淀为生产可观测性
+- 后端即服务 API 暴露的工程边界：哪些能力做成前端可拖拽，哪些必须代码调用
+
+## 独立开发者价值
+
+上手成本中等，会 Python 加一点 JS，一周可搭出 RAG 与 Agent 的 MVP。最大优势是把 AI 应用的工程化标准化了，独立开发者无需自写 RAG、Agent 框架、观测系统，可直接套 UI 做行业 SaaS，例如法律咨询助手、跨境电商选品问答。
+
+二次开发空间充足。前端 React 与后端 Python 都是主流栈，自定义节点、Provider、检索后端、Agent 工具都有官方扩展点。社区贡献的 Provider 与工具体系持续增长，fork 改一改就能交付企业版。
+
+变现路径有三条：一是给中小企业做 Dify 私有化部署加行业知识库定制，按项目 5-20 万；二是套垂直 UI 做订阅制 SaaS，例如教育 AI 助教、法律 AI 咨询，月费 99-999 元；三是做 Dify 培训课程，把搭应用能力打包卖给想入行的工程师。
+
+合规友好度高。协议基于 Apache 2.0 加少量附加条件，自托管与商业产品集成无法律摩擦，模型调用可全部走国内推理服务，规避跨境数据合规风险。
+
+## 中文友好度
+
+- 文档：官方简体中文覆盖安装、模型接入、Workflow、Agent、API 全链路，与英文版同步
+- 社区：Discord 万级成员，国内飞书群、微信群、知乎活跃，Dify 中文版核心贡献者持续维护
+- Issue：中英文均响应，平均 1-3 天首次回复，PR 接受中文描述
+- 访问：GitHub、官方文档、Docker Hub、Helm Chart 国内均可直连
+
+## 总结
+
+Dify 不是又一个 LangChain 复刻，它把 LLM 应用特有的工程问题沉淀为产品，让 AI 应用的最后一公里成为可复用的工程资产。
+
+如果你正面对 LLM 能力如何落到生产系统这个问题，建议花一个周末把 Dify 跑通一遍。
+
+GitHub: https://github.com/langgenius/dify`
+  }  ,
+  {
+    id: 7,
+    title: "Agent Reach：让 AI Agent 真正能上网的能力层",
+    date: '2026-09-16',
+    excerpt: "Agent Reach 是给 AI Agent 用的「互联网能力层」，16 个站点封装为统一 channel，多后端路由选当下最稳的接入方式，由 doctor 持续体检，单条路失效自动切换，MIT 全开源。",
+    tags: ['AI Agent', 'Python', '随笔'],
+    words: 1484,
+    sourceFile: 'src/data/posts/2026-09-16-agent-reach.md',
+    repoUrl: 'https://github.com/Panniantong/Agent-Reach',
+    content: `
+AI Agent 在 2026 年已经能写代码、改文档、管项目，但让它去网上读推特、刷 Reddit、看 YouTube 字幕，门槛依然很高：每个平台都有自己的 API 收费、反爬封锁、登录态维护。Panniantong/Agent-Reach 把这件事压成一句话——"帮我安装 Agent Reach: ..."——装完 Agent 自己会读网页、读 RSS、看字幕、搜 GitHub。
+
+## 一句话定位
+
+它是给 AI Agent 的「互联网能力层」，把十几个站点封装成统一 channel，按「首选 + 备选」多后端路由选当下最稳的接入方式，由 agent-reach doctor 持续体检，单条路失效自动切换，不需要用户写一行爬虫。
+
+## 技术栈
+
+- 核心：Python 3.10+，CLI 入口 agent-reach，每个站点一个 channel 模块
+- 后端：yt-dlp（YouTube）、bili-cli（B 站）、twitter-cli（推特）、OpenCLI（小红书/Reddit/Facebook/Instagram 复用浏览器登录态）、gh CLI（GitHub）、feedparser（RSS）、Jina Reader（通用网页）、Exa via mcporter（语义搜索）、mcp-server-linkedin（LinkedIn）
+- 协议：stdio / MCP，零网络监听
+- 许可：MIT，代码全开源
+
+## 核心功能
+
+**多后端路由** 每个平台是一条有序候选列表（如 B 站 bili-cli ▸ OpenCLI ▸ 搜索 API），安装时实测体检，首个可用后端当选，失效无需重装。
+
+**真体检而非体检报告** agent-reach doctor 真实执行命令探测，能识别「装了但坏了」，对每个多后端平台报告当前在用哪条路。
+
+**SKILL.md 即装即用** 装好后 Agent 读 SKILL.md 就知道每个平台调什么命令，不需要用户记 CLI。
+
+**默认安全** install 默认只检查环境不修改系统，需 --system 才落配置；cookie 仅存本地 ~/.agent-reach/config.yaml，文件权限 600；支持 --dry-run 预览所有动作。
+
+**覆盖面** 16 个站点，含小红书、B 站、Reddit、Twitter、LinkedIn、Boss直聘、V2EX、雪球、小宇宙等中文原生平台。
+
+## 对比 MCP 自建与 Firecrawl
+
+| 维度 | Agent Reach | 自建 MCP Wrapper | Firecrawl |
+|---|---|---|---|
+| 开源 | MIT | 通常私有 | AGPL-3.0 |
+| 多平台 | 16 个一站式 | 单点 | 主打网页 |
+| 多后端路由 | 首选+备选自动切换 | 无，需手写 | 无 |
+| 真体检 | doctor --json | 无 | 无 |
+| 中文平台 | 小红书/雪球/V2EX/Boss直聘 | 需自写 | 无 |
+| Cookie 风险隔离 | 文档强提示「用小号」 | 自行承担 | 走云端 |
+| 上手成本 | 一句话给 Agent | 写 MCP server | 注册云 API |
+
+差异化在于，Agent Reach 把「选型 + 安装 + 体检 + 路由」做成单一职责，Firecrawl 偏云端通用网页抓取，自建 MCP Wrapper 偏单点。它是三者中唯一把中文社区原生平台覆盖完整、又把「平台封了就换路」做成工程机制的开源项目。
+
+## 客观短板
+
+- 抓取依赖上游 CLI/服务，部分平台（如 Reddit 的 rdt-cli v0.4.2）仍会被 WAF 403，#642 已跟踪
+- 部分渠道强依赖桌面浏览器登录态（Reddit/Facebook/Instagram），服务器无 GUI 时无法解锁
+- LinkedIn 渠道在 greenlet 3.5.4 已知崩溃，#586 标记需锁定版本
+- 依赖工具链较重：pip + Node.js + gh CLI + mcporter + yt-dlp，Windows 用户需 Git Bash
+- 强反爬平台（小红书/Boss直聘）仍有周期性 security check，需人工介入
+- 自身不存数据，渠道健康度受上游项目活跃度影响（yt-dlp 退出 B 站就是典型）
+
+## 适合谁，不适合谁
+
+适合：把 AI Agent 当主力工具的个人开发者；做内容研究、市场情报、竞品监控需要 Agent 自动上网的；想统一管理一堆 CLI 抓取工具又不想每次新机器重配的；中文社交平台重度研究者。
+
+不适合：需要 SLA 保证的企业级抓取（应上 Firecrawl/Browser Use 云服务）；对反爬合规有严格审计要求的金融/医疗场景；不愿自己跑命令行的纯业务用户。
+
+## 普通开发者能学到什么
+
+- 能力层抽象：把选型、路由、体检从具体实现中剥离
+- 多后端有序回退模式：列表 + 实测探测 + 首个可用当选
+- 写给 Agent 的 SKILL.md 范式：让 LLM 读到就知道调什么命令
+- doctor 体检模式：shutil.which 不是健康证明，要真跑命令探测
+- 凭据隔离与最小权限：config 文件 600 权限、--system 显式升级
+- 上游选型纪律：B 站封 yt-dlp 就换 bili-cli，不留死代码
+
+## 独立开发者价值
+
+上手成本极低，把 README 那行「帮我安装 Agent Reach: ...」复制给 Claude Code 或 OpenClaw，五分钟内 Agent 自己跑通 install。二次开发空间足够：每个 channel 是独立 Python 文件，加新站点只需新建一个文件并注册到 __init__.py，无需动 core。SKILL.md 也模板化，照抄即可接入新 Agent 框架。
+
+变现路径有三条：一是给中小企业做「Agent 联网能力定制」，按平台组合报价 5-15 万；二是封装成自己 SaaS 的内置模块，对外提供 agent-reach 风格 API 收订阅费；三是做培训课教独立开发者把 Agent Reach 接进自己的 AI 产品。
+
+合规友好度高，MIT 全开源、cookie 仅本地、默认安全模式不强改系统。但要注意它本身是抓取编排层，最终封号责任在使用者，建议按 README 提示用「专用小号」隔离账号风险。
+
+## 中文开发者友好度
+
+- 文档：README、SKILL.md、CHANGELOG、references/ 全部中英双语，作者是中文母语开发者
+- 社区：GitHub Issue 中英文混合回复，常见问题作者亲自答
+- Issue 响应：核心维护者 Panniantong 几乎逐条回复，平均 1-3 天首次响应
+- 访问：GitHub raw 直连国内可用，所有依赖 CLI 均能从国内镜像拉取
+
+## 总结
+
+Agent Reach 不抢「读网页」这个最底层能力，而是把选型、路由、体检、安全升级做成一个独立产品层。
+
+对独立开发者来说，它是把 Agent 真正变成「能上网的 Agent」的最短路径。
+
+如果你正用 Claude Code、Cursor、OpenClaw 但每次都重复踩平台反爬的坑，强烈建议试一下。
+
+GitHub: https://github.com/Panniantong/Agent-Reach
+`
+  },
+  {
+    id: 8,
+    title: 'DeepSeek Harness：把 Everything-is-a-Plugin 落到工程的开源 Agent Harness',
+    date: '2026-09-21',
+    excerpt: 'deepseek-harness（CLI 简写 dsh）是 DeepSeek AI 开源的 Agent Harness，以 Everything-is-a-Plugin 架构把模型适配、工具注册、会话日志、Agent 循环本身都做成 Cordis 插件，提供 dsh web / dsh acp 双端与 Node / Python SDK，MIT 全开源。',
+    tags: ['AI Agent', 'TypeScript', '随笔'],
+    words: 1467,
+    sourceFile: 'src/data/posts/2026-09-21-deepseek-harness.md',
+    repoUrl: 'https://github.com/deepseek-ai/deepseek-harness',
+    content: `# DeepSeek Harness：把 Everything-is-a-Plugin 落到工程的开源 Agent Harness
+
+当 Cursor、Claude Code、Codex、Gemini CLI 把 AI 编码助手做成了终端工具，下一步拼的不是 CLI 本身，而是 Agent 怎么跟模型、工具、内存、权限、UI 这些「横切关注点」共存。DeepSeek AI 在 2026 年 8 月开出的答案是 deepseek-harness（CLI 简写 dsh），一个以「Everything is a Plugin」为口号的 Agent Harness，把 23 万 star 体量的工程注意力压进同一个 monorepo。
+
+## 一句话定位
+
+它是当前 GitHub 上少有的、由大模型厂商开源的 Agent Harness，把模型适配、工具注册、会话日志、Agent 循环本身都做成 Cordis 插件，运行时按 profile 装配，让你既能用 npx 起 Web UI，也能 fork 一份做自己的代码 Agent。
+
+## 技术栈
+
+- 核心：TypeScript（Node.js 20+）+ pnpm monorepo
+- 插件框架：Cordis（@cordis/core），所有可替换部件均为插件
+- 运行时：Cordis Context 装在多 profile 模板下：web / headless / sdk / sdk-minimal / acp
+- 模型适配：DeepSeek 自家模型 + OpenAI / Anthropic 兼容协议
+- UI：自研 Web UI（默认 127.0.0.1:3080）+ 桌面端（Electron，由 @deepseek-electron 插件承载）+ TUI
+- 文档：Docusaurus（中文 README.zh.md + 全站 i18n）
+- 协议：MCP、ACP、OpenAI 兼容、Anthropic 兼容
+- 许可：MIT
+
+## 核心功能
+
+**Everything-is-a-Plugin 架构** 模型适配、工具注册、会话日志、Agent 循环本身都是 Cordis 插件，运行时通过 ctx 注册 service、event、effect，无特权核心可补丁。
+
+**Profile 装配机制** dsh-base / dsh-headless / dsh-sdk / dsh-acp 模板任意组合，用户级 cordis.patch.yml 在装配时叠加，决定能力面。
+
+**dsh web 本地 Web UI** 一行 npx @deepseek-ai/dsh web 起 http://127.0.0.1:3080，侧栏可打开 Subagent 会话、Office 文件预览、浏览器 URL、提交计划审阅。
+
+**dsh acp 桌面 + 插件生态** 桌面端跑同一套 Cordis 插件，配合 dsh-plugin 主题仓库即装即用，是这个项目最具辨识度的工程动作。
+
+**Cordis 论文级抽象** 基于论文《A Programming Paradigm for Spatiotemporal Composability》的 spatiotemporal composability 模型，事件、effect 都有 reversal 语义。
+
+**完整 SDK 入口** 提供 Python SDK + Node SDK 与 REST / WebSocket 接口，可直接嵌入第三方 Agent 产品做 Harness 后端。
+
+## 对比 Claude Code、OpenCode 与 Gemini CLI
+
+| 维度 | DeepSeek Harness | Claude Code | OpenCode | Gemini CLI |
+|---|---|---|---|---|
+| 开源 | MIT | 闭源（仅 CLI 开源） | MIT | Apache-2.0 |
+| 架构 | Everything-is-a-Plugin（Cordis） | 单体 CLI + 私有 Harness | 终端代理 + 多模型 | 终端代理 + Gemini |
+| 可嵌入 | 提供 Node / Python SDK | 不可 | 一般 | 不可 |
+| 桌面端 | 官方 Electron dsh-acp | 无 | 无 | 无 |
+| MCP / ACP | MCP + ACP 双栈 | MCP | MCP | MCP |
+| 中文文档 | 官方完整 i18n | 无 | 一般 | 无 |
+| 上手成本 | 中 | 低 | 低 | 低 |
+
+差异化在于：Harness 把模型、工具、UI、权限都做成可替换插件，对外提供 SDK 让你把整套 Agent 引擎塞进自己的产品，这是当前 GitHub 上少见的「可被集成的 Harness」。
+
+## 客观短板
+
+- 处于 developer preview，官方明确写明 THERE WILL BE COMPATIBILITY-BREAKING CHANGES，插件 API 仍会变。
+- 当前最新 release 仍为 v0.1.6-alpha.2（2026-09-17），还未发布稳定 1.0，生产部署需要跟踪每次升级。
+- 文档明确包含 SAFETY.md 与工具安全提示，部分工具默认需审批，新手配置容易踩权限坑。
+- 桌面端 dsh-acp 在 issue 历史中曾被回滚（fix: revert desktop），Electron 化路径仍在调整。
+- 仅 0 open issue 是因为团队把反馈统一导入了 GitHub Discussions，搜索 crash / data loss 时需去 Discussions 才能看清真实问题。
+- 生态规模仍以 DeepSeek 自家模型为最优路径，对 Anthropic / OpenAI 的工具调用兼容性仍在追赶。
+
+## 适合谁，不适合谁
+
+适合：要做自有代码 Agent / Coding Agent 产品的团队；想把模型适配、工具注册、UI 解耦重写的研究者与大厂架构组；评估 Agent 嵌入生产系统替代闭源 CLI 的架构负责人；对 Cordis 编程范式感兴趣的工程师；要在产品里直接调 dsh SDK 的 SaaS / IDE 团队。
+
+不适合：只想 5 分钟跑通一个 ChatBot 的非技术用户；要求稳定 SLA 的金融 / 医疗生产（仍在 alpha）；不愿读英文与中文双份文档只看 C 商业模型评估的甲方；只想要单机端到端截图、不关心插件机制的轻量用户。
+
+## 普通开发者能学到什么
+
+- 插件上下文与 effect reversal：理解 Cordis 如何用 ctx 表达可逆变更
+- Profile 装配模式：用多层 patch 文件叠加配置的设计取舍
+- 多模型抽象层：OpenAI 兼容、Anthropic 兼容、自托管协议的统一 Provider 接口
+- 桌面 + CLI + SDK 三端同源：Electron、TUI、Python / Node SDK 共享同一 Cordis 插件树
+- spatiotemporal composability 模型：跨时间、跨空间的可组合编程范式
+- GitHub Discussions 替代 Issue 的社区分流策略及配套搜索体验设计
+
+## 独立开发者价值
+
+上手成本中等，会 Node.js + TypeScript 一周可搭出 dsh web + 自定义 plugin；会 Python 直接接 dsh SDK 把 Harness 当后端。MIT 全开源让独立开发者不必养模型适配团队即可商用。
+
+二次开发空间充足。dsh-plugin 主题机制让新工具一键发布；profile 让你 fork 一份就能组装垂直变体，比如「电商选品 Harness」「学术写作 Harness」；UI 浅改主题即可换皮。
+
+变现路径有三条：中小企业内部 Agent 私有化部署，按工程项报价 5-20 万；行业模板 Marketplace 售卖，单套 200-2000 元；把 dsh SDK 接入自有 SaaS，按月订阅 99-999 元。
+
+合规上，MIT 允许商用、修改、闭源再分发；模型调用可全部走国内推理服务，规避跨境数据合规风险；插件 sandbox 与审批模型提供基础安全护栏，团队按场景自配策略即可。
+
+## 中文开发者友好度
+
+- 文档：官方 README.zh.md + 全站 Docusaurus 中文版同步维护，架构、安全、SDK 章节均有中文入口
+- 社区：Discord、GitHub Discussions 中英文混合回复，国内微信 / 飞书群有第三方维护者参与答疑
+- 响应：核心维护者 imccyu、CreatixChu、LegGasai、turtle2099 在 Discussions 高频回复，平均 1-3 天首次响应
+- 访问：GitHub 仓库、Docusaurus 站点、npm 包 @deepseek-ai/dsh 国内直连稳定
+
+## 总结
+
+DeepSeek Harness 不是又一个终端 CLI，它把 Agent 引擎的所有横切关注点都做成可替换插件，是少数能给大厂与独立开发者同时复用的开源 Harness。
+
+如果你正面对「如何把 AI Agent 嵌入自家产品」这个问题，强烈建议花一个周末 clone 仓库跑通 dsh web，并读一遍 Cordis primer。
+
+GitHub: https://github.com/deepseek-ai/deepseek-harness`
+
+  },
+  {
+    id: 9,
+    title: 'MarkItDown：把 Office 与 PDF 喂给 LLM 的微软官方转换器',
+    date: '2026-10-11',
+    excerpt: "microsoft/markitdown 是微软官方出品的文档到 Markdown 转换器，Python 3.10-3.14、MIT 协议，覆盖 PDF / Office / 图片 / 音视频 / Outlook / YouTube / EPUB 等十几种格式，原生提供 Python API、CLI、Docker、Azure 云端推理与 markitdown-mcp 五种接入方式。",
+    tags: ['Python', 'AI Agent'],
+    words: 1399,
+    sourceFile: 'src/data/posts/2026-10-11-markitdown.md',
+    repoUrl: 'https://github.com/microsoft/markitdown',
+    content: "\n当 RAG 与 AI Agent 已经普及到每一个 Python 库演示页，真正卡住的反而是「把 PDF / Word / Excel 干净地变 Markdown」这件事。微软在 2024 年末把内部用了多年的代码以 MIT 协议开源成 `microsoft/markitdown`，让任何 LLM 都能直接消费 Office、PDF、图片、音频与 YouTube 字幕，且 v0.1.8 已稳态迭代了 9 个月。\n\n## 一句话定位\n\nMarkItDown 是微软官方出品的「文档到 Markdown」转换器，定位是把 Office、PDF、图片、音视频、YouTube、Outlook、EPUB 等十几种格式统一输出为 LLM 友好的 Markdown，并原生提供 Python API、CLI、Docker、Azure 云端推理与 MCP 服务器五种接入方式。\n\n## 技术栈\n\n- 语言：Python 3.10-3.14\n- 核心包：markitdown（核心转换库）、markitdown-sample-plugin（插件样例）、markitdown-mcp（MCP 服务器）\n- 文档解析：pdfminer.six、python-docx、python-pptx、openpyxl、BeautifulSoup4、pydub、SpeechRecognition\n- LLM 能力：image description 走 OpenAI 兼容协议，可替换任意 base_url；markitdown-ocr 插件基于同一 llm_client 给 PDF / DOCX / PPTX / XLSX 补 OCR\n- 云端推理：Azure Document Intelligence 与 Azure Content Understanding 二选一，后者支持视频\n- 辅助：Docker、hatch 测试、pre-commit、uv / pip / conda 多环境\n- 许可：MIT\n\n## 核心功能\n\n**多格式统一转 Markdown** 一行 `markitdown xxx.pdf > out.md` 处理 PDF / PPTX / DOCX / XLSX / 图片 / 音频 / HTML / CSV / JSON / XML / ZIP / EPUB / Outlook / YouTube 字幕，输出保留标题、列表、表格与链接等结构化语义。\n\n**LLM 图像描述** 构造 `MarkItDown(llm_client=..., llm_model=...)` 后，PPTX 与 JPG 直接拿到模型生成的 alt-text，max_retries 控制 OpenAI SDK 的退避重试。\n\n**Azure Document Intelligence** `-d` 启用云端 layout 抽取，处理复杂 PDF 与扫描件的质量显著高于本地 parser，输出仍为 Markdown。\n\n**Azure Content Understanding** `--use-cu` 接入多模态 analyzer，可同时处理文档、图像、音频与视频；自带 YAML front matter 结构化字段，并支持自定义 analyzer（发票金额、合同条款）。\n\n**markitdown-mcp** 把 15 个工具暴露给 MCP 客户端，使 Claude Code / Cursor / OpenCode 可以直接 `convert` 本地或远程文档。\n\n**3rd-party 插件生态** `--list-plugins` 列举、`--use-plugins` 启用，仓库内提供 `markitdown-sample-plugin` 模板；社区已有 OCR、YouTube、Notion 等插件。\n\n## 对比 textract、Docling 与 Pandoc\n\n| 维度 | MarkItDown | textract | Docling | Pandoc |\n|---|---|---|---|---|\n| 开源 | MIT（微软官方） | MIT | MIT | GPL-2.0 |\n| AI 输出 | Markdown + LLM 描述 + YAML 字段 | 纯文本 | 结构化 JSON + Markdown | 任意标记语言 |\n| 插件沙箱 | entry_points 机制 | 无 | 无 | 过滤器 |\n| 多租户 RBAC | 由宿主页提供 | 由宿主页提供 | 由宿主页提供 | 由宿主页提供 |\n| 中文文档 | 官方翻译进行中 | 稀缺 | 官方中文 | 完整 |\n| 上手成本 | 极低 | 中 | 中 | 低 |\n\n差异化看点是「LLM 友好 + Microsoft 云端推理 + 插件生态 + MCP」这条组合，让它成为 RAG / Agent 上下文的天然入口；纯学术或版式保真需求则更适合 Pandoc 与 Docling。\n\n## 客观短板\n\n- 不输出 PDF 或 Word，本身是 LLM 预处理层，不是版式保真转换器。\n- 自带 PDF 解析在扫描件、复杂表格、公式上精度有限，复杂场景必须接 Document Intelligence。\n- 新格式合并节奏极慢，官方明确「新格式主要靠 3rd-party 插件」，主仓保持精简。\n- markitdown-ocr 依赖外部 OpenAI 兼容服务，自带 OCR 仍要走云端。\n- 对恶意输入尚未做完整沙箱，官方文档强调「按进程权限运行、限制 scheme 与路径」，服务化部署需自包装。\n- CLA 由微软持有，给企业级 fork 增加一层法务评估成本。\n\n## 适合谁，不适合谁\n\n适合：要为 RAG / Agent 准备文档语料的 AI 工程师；做企业知识库要把 Office 与 PDF 全文索引的团队；做数据 ETL 把零散文件归一化为 Markdown 的数据工程师；需要可被 MCP 客户端直接调用的文档工具链开发者；用 uv 锁定依赖做内部 AI 工具集的个人与团队。\n\n不适合：要求版式零损失的 PDF 出版流程；纯离线、无外部依赖的单机敏感环境；要批量做高保真 EPUB 出书的出版业务；只需做 CSV / JSON 这类纯文本处理的用户。\n\n## 普通开发者能学到什么\n\n- LLM 友好输出的设计原则：标题层级、表格管道符、链接保留如何折中 token 数与可读性\n- Python 包按可选依赖拆分的工程范式：`[pdf]`、`[docx]`、`[pptx]` 让安装体量可控\n- entry_points 模式实现的轻量插件机制：无需中心仓库，社区靠 hashtag `#markitdown-plugin` 自我组织\n- Microsoft Azure Document Intelligence 与 Content Understanding 的差异：单模态 layout 抽取 vs 多模态结构化字段输出\n- MCP 服务器从零起的最小工程：用 15 个工具覆盖 convert / search / metadata 的边界设计\n- 用 hatch + pre-commit + uv 锁 Python 包的标准 LLM 时代工程化模板\n\n## 独立开发者价值\n\n上手成本极低，会 Python 加一行 pip install，半小时内把零散文件流式写入 RAG Pipeline。最大亮点是「开箱即用 + 微软背书 + MCP 入口」，一个独立开发者也能搭起企业级文档底座。\n\n二次开发空间宽，按 entry_points 写一个 MyPlugin 即可发布为独立 PyPI 包，调用 `--use-plugins` 即生效；Azure 路径可换任意 OpenAI 兼容的国内模型，规避跨境数据合规风险。\n\n变现路径有四条：一是做细分领域 SaaS 包装，例如法律卷宗 / 学术论文 / 财务票据的入库与查询，按月费 99-999 元；二是给中小企业做 Office 全文检索与 RAG 部署外包，按工程项报价 5-20 万；三是做付费插件 Marketplace，模板 + 主题按 50-500 元单价销售；四是把 markitdown-mcp 嵌入现有 AI 产品当文档工具，按调用次数计费。\n\n合规友好度高，MIT 协议允许商用、修改、闭源再分发；数据走国内模型不传境外；唯一注意点是 CLA 条款，对纯应用层使用几乎无影响。\n\n## 中文友好度\n\n- 文档：英文 README 为主，微软 Learn 中文版与社区翻译覆盖安装、Azure 接入、MCP 章节\n- 社区：GitHub Issue 与 Discussion 中英文混合，国内知乎、CSDN 教程密度高\n- Issue 响应：核心维护者 Adam Fourney（afourney）每周均提 PR，社区贡献者 24 小时内首次响应\n- 访问：GitHub 仓库、PyPI、hatch 镜像国内直连稳定；Azure 端点需自备国内替代或代理\n\n## 总结\n\nMarkItDown 不是又一个 PDF 转 Word 工具，它把 Office、PDF、媒体内容归一化为 LLM 可直接消费的 Markdown，并原生对接 Microsoft 云端推理与 MCP 协议。\n\n如果你正为 RAG / Agent 准备文档上下文，花一个下午把 markitdown 跑通，再决定要不要接 Azure，是 2026 年最稳的入门路径。\n\nGitHub: https://github.com/microsoft/markitdown\n"
+  }
+]
+
+export const ALBUMS = []
+
+// 站点统计数据（可空时为 0）
+export const SITE_STATS = {
+  articleCount: ARTICLES.length,
+  categoryCount: 3,
+  tagCount: TAGS.length,
+  totalWords: ARTICLES.reduce((s, a) => s + (a.words || 0), 0),
+  lastUpdated: '2026-10-11'
+}
