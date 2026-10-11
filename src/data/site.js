@@ -8,72 +8,25 @@ export const SITE = {
   startDate: '2026-08-15',
   copyright: '© 2026 鹰の团 · Gr1ff1th. All Rights Reserved.',
   socials: [
-    {
-      key: 'github',
-      label: 'GitHub',
-      url: 'https://github.com/Weixianyun',
-      color: '#0f172a'
-    },
-    {
-      key: 'bilibili',
-      label: 'Bilibili',
-      url: 'https://space.bilibili.com/',
-      color: '#fb7299'
-    },
-    {
-      key: 'email',
-      label: 'Email',
-      url: 'mailto:weixianyun55@gmail.com',
-      color: '#3b82f6'
-    }
+    { key: 'github', label: 'GitHub', url: 'https://github.com/Weixianyun', color: '#0f172a' },
+    { key: 'bilibili', label: 'Bilibili', url: 'https://space.bilibili.com/', color: '#fb7299' },
+    { key: 'email', label: 'Email', url: 'mailto:weixianyun55@gmail.com', color: '#3b82f6' }
   ]
 }
 
 export const QUICK_LINKS = [
-  {
-    key: 'github',
-    label: 'GitHub',
-    url: 'https://github.com/Weixianyun',
-    color: '#0f172a'
-  },
-  {
-    key: 'bing',
-    label: 'Bing',
-    url: 'https://www.bing.com/',
-    color: '#008373'
-  },
-  {
-    key: 'bilibili',
-    label: 'Bilibili',
-    url: 'https://space.bilibili.com/',
-    color: '#fb7299'
-  },
-  {
-    key: 'youtube',
-    label: 'YouTube',
-    url: 'https://www.youtube.com/',
-    color: '#ff0000'
-  }
+  { key: 'github', label: 'GitHub', url: 'https://github.com/Weixianyun', color: '#0f172a' },
+  { key: 'bing', label: 'Bing', url: 'https://www.bing.com/', color: '#008373' },
+  { key: 'bilibili', label: 'Bilibili', url: 'https://space.bilibili.com/', color: '#fb7299' },
+  { key: 'youtube', label: 'YouTube', url: 'https://www.youtube.com/', color: '#ff0000' }
 ]
 
 export const NOTICES = {
-  light: {
-    jp: '光の鷹は翔ぶ 白銀の翼、蒼き眼',
-    zh: '光之鹰展翅翱翔 白银之翼，蔚蓝之瞳'
-  },
-  dark: {
-    jp: '闇の翼は降り る血と闇の彼方より',
-    zh: '暗之翼降临 来自血与暗之彼方。'
-  }
+  light: { jp: '光の鷹は翔ぶ 白銀の翼、蒼き眼', zh: '光之鹰展翅翱翔 白银之翼，蔚蓝之瞳' },
+  dark: { jp: '闇の翼は降り る血と闇の彼方より', zh: '暗之翼降临 来自血与暗之彼方。' }
 }
 
-export const SKILLS = [
-  '软件设计',
-  '应用开发',
-  '插件开发',
-  '艺术创作',
-  '前沿科技'
-]
+export const SKILLS = ['软件设计','应用开发','插件开发','艺术创作','前沿科技']
 
 export const TAGS = [
   { name: 'Vue', count: 9, color: '#42b883' },
@@ -101,16 +54,6 @@ export const TECH_STACK = [
   { name: 'WebGL', color: '#990000', icon: 'webgl' }
 ]
 
-// 示例数据（可空 — 留接口便于以后接入）
-export const PROJECTS = [
-  // {
-  //   id: 1,
-  //   title: '示例项目',
-  //   desc: '项目描述',
-  //   cover: '',
-  //   tags: ['Vue', 'TS'],
-  //   url: '#'
-  // }
-]
+export const PROJECTS = []
 
 PLACEHOLDER_ARTICLES
